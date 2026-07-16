@@ -1,0 +1,186 @@
+        :root {
+            --background-image: url('https://www.loliapi.com/acg/'); /* 背景图片API地址 */
+            --modal-overlay-bg: rgba(0, 0, 0, 0.3);
+            --modal-content-bg: #ffffff;
+            --modal-content-padding: 20px 30px;
+            --modal-content-border-radius: 8px;
+            --modal-content-max-width: 800px;
+            --modal-content-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            --modal-close-color: #cccccc;
+            --modal-close-hover-color: #000000;
+            --modal-image-max-width: 100%;
+            --modal-image-border-radius: 4px;
+            --heart-font-size: 24px;
+            --heart-position: fixed;
+            --heart-opacity: 0.8;
+            --heart-transition: transform 0.3s ease, opacity 0.3s ease;
+            --footer-bg: #f8f8f8;
+            --footer-text-color: #555555;
+            --button-bg: #007BFF;
+            --button-text-color: #ffffff;
+            --button-hover-bg: #0056b3;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background: var(--background-image) no-repeat center center fixed;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+        }
+
+        /* 遮罩层样式 */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--modal-overlay-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .heart:hover {
+            transform: scale(1.2);
+            opacity: 1;
+        }
+
+        /* 头部样式 */
+        header {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2em;
+            color: #333333;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0 0 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        nav ul li {
+            margin: 5px;
+        }
+
+        /* 按钮样式 */
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: var(--button-bg);
+            color: var(--button-text-color);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--button-hover-bg);
+        }
+
+        /* 主内容样式 */
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: calc(100vh - 200px); /* 假设头部和底部各占100px */
+            text-align: center;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        /* 页脚样式 */
+        footer {
+            background: var(--footer-bg);
+            color: var(--footer-text-color);
+            padding: 15px;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+        
+        
+        
+        
+        /* 公告专区  */
+        /* 遮罩层样式 */
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        /* 弹窗样式 */
+        .popup {
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+        }
+
+        /* 弹窗标题样式 */
+        .popup h2 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        /* 弹窗内容样式 */
+        .popup p {
+            font-size: 16px;
+            color: #555;
+        }
+
+        /* 超链接样式 */
+        .popup a {
+            color: #1e90ff;
+            text-decoration: none;
+        }
+
+        .popup a:hover {
+            text-decoration: underline;
+        }
+
+        /* 按钮样式 */
+        .popup .button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #1e90ff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .popup .button:hover {
+            background-color: #187bcd;
+        }

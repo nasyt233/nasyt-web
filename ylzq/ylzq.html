@@ -1,0 +1,60 @@
+<html>
+ <head> 
+  <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
+  <title>图片专区</title> 
+  <link rel="stylesheet" href="styles.css"> 
+  <script src="js/jq.js"></script> 
+ </head> 
+ <body id="v1"> 
+ <a href=""></a>
+  <h1 id="v2">娱乐专区</h1>
+  <p>此专区需要加载一会儿。</p>
+  <a href="https://xiaoapi.cn/API/lssdjt_pic.php">历史今天</a> 
+   <p> <a href=""></a></p>
+   <p> <a href=""></a></p>
+   <p> <a href=""></a></p>
+   <p> <a href=""></a></p>
+   <p> <a href=""></a></p>
+  </body>
+<script>
+    (function () {
+        var a_idx = 0;
+        window.onclick = function (event) {
+            var a = new Array("❤2024幸福美满 ❤", "❤2024快乐健康❤", "❤2024事业有成❤", "❤2024心想事成❤");
+           var heart = document.createElement("b"); //创建b元素
+            heart.onselectstart = new Function('event.returnValue=false'); //防止拖动
+
+            document.body.appendChild(heart).innerHTML = a[a_idx]; //将b元素添加到页面上
+            a_idx = (a_idx + 1) % a.length;
+            heart.style.cssText = "position: fixed;left:-100%;"; //给p元素设置样式
+
+            var f = 50, // 字体大小
+                x = event.clientX - f / 2 - 30, // 横坐标
+                y = event.clientY - f, // 纵坐标
+                c = randomColor(), // 随机颜色
+                a = 1, // 透明度
+                s = 0.8; // 放大缩小
+
+            var timer = setInterval(function () { //添加定时器
+                if (a <= 0) {
+                    document.body.removeChild(heart);
+                    clearInterval(timer);
+                } else {
+                    heart.style.cssText = "font-size:16px;cursor: default;position: fixed;color:" +
+                        c + ";left:" + x + "px;top:" + y + "px;opacity:" + a + ";transform:scale(" +
+                        s + ");";
+
+                    y--;
+                    a -= 0.016;
+                    s += 0.002;
+                }
+            }, 15)
+        }
+        // 随机颜色
+        function randomColor() {
+            return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math
+                .random() * 255)) + ")";
+        }
+    }());
+</script>
+</html>

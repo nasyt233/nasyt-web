@@ -1,0 +1,433 @@
+/*音乐播放页*/
+#PlayPage{
+  background-color:#000;
+  background-size:cover;
+  background-position: center;
+  }
+.PlayPage_Cover_box{
+  margin:0 10%;
+  width:80%;
+  position:relative;
+  aspect-ratio:1.5/1;
+  }
+#PlayPage_Cover{
+  position:relative;
+  width:100%;
+  height:100%;
+  border-radius:5px;
+  overflow:hidden;
+  background-size:100%;
+  transition:0.3s;
+  }
+.PlayPage_Cover_mo{
+  aspect-ratio:1/1;
+  height:100%;
+  -webkit-mask:url('../img/To/Cover_mo.png')100% 100%/cover;
+  -webkit-mask-size:100%;
+  -webkit-mask-repeat: no-repeat;
+   }
+#PlayPage_Cover::before{
+  z-index:-1;
+  content:"";
+  position:absolute;
+  width:100%;
+  height:100%;
+  background-image:url('../img/To/gox.png');
+  background-size:100% 100%;
+  }
+#PlayPage_Record{
+  top:0;
+  right:0;
+  z-index:-2;
+  height:100%;
+  position:absolute;
+  border-radius:50%;
+  aspect-ratio:1/1;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  animation: move_spin 6s linear infinite;
+  animation-play-state:paused;
+  background-image:url('../img/To/Record.png');
+  background-size:100% 100%;
+  }
+#PlayPage_Record_Cover{
+  border-radius:50%;
+  width:43%;
+  aspect-ratio:1/1;
+  background-size:100% 100%;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  }
+#PlayPage_Cover_kong{
+  aspect-ratio:1/1;
+  border-radius:50%;
+  width:12.5px;
+  outline:10px solid rgba(0,0,0,0.3);
+  }
+.PlayPage_Lyric_box{
+  margin:5% 0 0 2%;
+  width:96%;
+  height:20%;
+  }
+ #lyric{
+  width:100%;
+  height:100%;
+  position: relative;
+  overflow: hidden;
+  }
+ #PlayPage_Lyric{
+  position: absolute;
+  width: 100%;
+  transition:0.3s;
+  }
+ .lyric{
+  width: 100%;
+  line-height:40px;
+  text-align: center;
+  font-size:12px;
+  list-style: none;
+  color: #eee;
+  transition:0.3s;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  }
+.active {
+  --mcolor:#0078ff;
+  color:#fff;
+  font-size:18px;
+  text-shadow:0 -0.8px var(--mcolor),
+  0.8px 0 var(--mcolor),
+  0 0.8px var(--mcolor),
+  -1px 0 var(--mcolor),
+  -1px -1px var(--mcolor),
+  1px 1px var(--mcolor),
+  1px -1px var(--mcolor),
+  -1px 1px var(--mcolor);
+  }
+.PlayPage_Songmessage_box{
+  margin:2.2%;
+  width:95%;
+  height:20%;
+  position:relative;
+  }
+#PlayPage_Songmessage_name{
+  font-size:22px;
+  width:98%;
+  color:white;
+  display:block;
+  margin-left:5%;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  }
+#PlayPage_Songmessage_singer{
+  font-size:12px;
+  width:98%;
+  display:block;
+  color:#eee;
+  margin-left:5%;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  }
+#PlayPage_more{
+   position:absolute;
+  height:20%;
+  right:5%;
+  bottom:5%;
+  aspect-ratio:1/1;
+  -webkit-mask:url('../img/Home/icon/meskin.png')100% 100%/cover;
+  -webkit-mask-size:100%;
+  -webkit-mask-repeat: no-repeat;
+  background-color:white;
+  }
+.PlayPage_Ctk_box{
+  margin:2%;
+  width:96%;
+  height:20%;
+  }
+.PlayPage_Times{
+  width:100%;
+  height:20px;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  }
+.PlayPage_Times time{
+  color:white;
+  font-size:10px;
+  margin:0 5%;
+  }
+#PlayPagePss{
+  width:65%;
+  height:1.5px;
+  }
+.PlayPage_Controls{
+  width:100%;
+  height:60px;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  margin:10% 0;
+  }
+.PlayPage_Controls button{
+  border:none;
+  outline:none;
+  background-color:Transparent;
+  }
+#PlayPage_Controls_Pattern{
+  margin:0 8%;
+  width:20px;
+  aspect-ratio:1/1;
+  background-image:url('../img/To/Rj.png');
+  background-size:100% 100%;
+  }
+#PlayPage_Controls_Previous{
+  margin:0 8%;
+  width:25px;
+  aspect-ratio:1/1;
+  background-image:url('../img/To/Previous.png');
+  background-size:100% 100%;
+  }
+#PlayPage_Controls_PPDX{
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  background-color:rgba(255,255,255,0.3);
+  }
+#PlayPage_Controls_ppd{
+  width:25px;
+  height:25px;
+  background-image:url('../img/To/pause.png');
+  background-size:100% 100%;
+  transition:0.1s;
+  }
+#PlayPage_Controls_NextSong{
+  margin:0 8%;
+  width:25px;
+  aspect-ratio:1/1;
+  background-image:url('../img/To/NextSong.png');
+  background-size:100% 100%;
+  }
+#PlayPage_MCollection{
+  width:25px;
+  margin:0 5%;
+  aspect-ratio:1/1;
+  -webkit-mask:url('../img/Home/icon/Musiclist.png')100% 100%/cover;
+  -webkit-mask-size:100%;
+  -webkit-mask-repeat: no-repeat;
+  background-color:white;
+  }
+
+/*音乐播放器*/
+#Hbottom{
+  position:fixed;
+  z-index:8;
+  width:96%;
+  height:6.5%;
+  margin:0 2%;
+  display:flex;
+  align-items: center;
+  border-radius:2px;
+  transition:0.3s;
+  background-color:var(--Tcolor);
+  }
+#HbmPss{
+  width:90%;
+  height:1.5px;
+  position:absolute;
+  left:5%;
+  top:1%;
+  }
+.Hbmk{
+  width:98%;
+  height:80%;
+  position:absolute;
+  left:1%;
+  bottom:5%;
+  display:flex;
+  }
+.Hbm_Coverk{
+  position:relative;
+  aspect-ratio:1.5/1;
+  height:100%;
+  }
+#Hbm_Cover{
+  position:relative;
+  aspect-ratio:1/1;
+  height:100%;
+  border-radius:5px;
+  overflow:hidden;
+  background-size:100%;
+  transition:0.3s;
+  }
+#Hbm_Cover::before{
+  z-index:-1;
+  content:"";
+  position:absolute;
+  width:100%;
+  height:100%;
+  background-image:url('../img/To/gox.png');
+  background-size:100% 100%;
+  }
+#Hbm_Record{
+  top:0;
+  right:0;
+  z-index:-2;
+  height:100%;
+  position:absolute;
+  border-radius:50%;
+  aspect-ratio:1/1;
+  background-image:url('../img/To/Record.png');
+  background-size:100% 100%;
+  }
+.Hbm_Nsk{
+  aspect-ratio:3/1;
+  height:100%;
+  }
+#Hbm_Nsk_name{
+  font-size:15px;
+  margin-left:2%;
+  width:98%;
+  color:white;
+  display:block;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  }
+#Hbm_Nsk_singer{
+  font-size:12px;
+  margin-left:2%;
+  width:98%;
+  display:block;
+  color:#eee;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  }
+.Hbm_Ctk{
+  width:47%;
+  height:100%;
+  }
+.Hbm_Controls{
+  width:100%;
+  height:60%;
+  display:flex;
+  justify-content: center;
+  }
+
+.Hbm_Controls button{
+  border:none;
+  outline:none;
+  margin:0 5%;
+  aspect-ratio:1/1;
+  height:100%;
+  background-color:Transparent;
+  }
+#Hbm_Controls_Previous{
+  background-image:url('../img/To/Previous.png');
+  background-size:100%;
+  }
+#Hbm_Controls_ppd{
+  background-image:url('../img/To/pause.png');
+  background-size:100%;
+  transition:0.1s;
+  }
+#Hbm_Controls_NextSong{
+  background-image:url('../img/To/NextSong.png');
+  background-size:100%;
+  }
+.Hbm_Times{
+  position:relative;
+  width:100%;
+  height:40%;
+  display:flex;
+  align-items: center;
+  }
+.Hbm_Times time{
+  color:white;
+  font-size:12px;
+  }
+#Hbm_Times_pss{
+  position:absolute;
+  left:2%;
+  }
+#Hbm_Times_don{
+  position:absolute;
+  right:2%;
+  }
+/*添加的音乐*/
+#MCollection{
+  -webkit-mask:url('../img/Home/icon/Musiclist.png')100% 100%/cover;
+  -webkit-mask-size:100%;
+  -webkit-mask-repeat: no-repeat;
+  background-color:white;
+  }
+.plus{
+  --Ltime:1s;
+  width:50px;
+  aspect-ratio:1/1;
+  position:fixed;
+  left:var(--left);
+  top:var(--top);
+  z-index:9;
+  animation:moveY var(--Ltime) cubic-bezier(0.5,-0.5,1,1);
+  }
+@keyframes moveY{
+  to{
+   opacity:0.5;
+   transform:translateY(var(--y));
+   } 
+  }
+.musicfm{
+  width:100%;
+  height:100%;
+  border-radius:5px;
+  animation:moveX var(--Ltime);
+  background-size:100%;
+  background-color:#400077;
+  }
+@keyframes moveX{
+ to{
+   transform:translateX(var(--x)) rotate(360deg);
+   } 
+  }
+@keyframes move_spin{
+  from{
+  transform: rotate(0deg);
+  }
+  to{
+  transform: rotate(360deg);
+  }
+}
+input[type=range] { 
+  cursor: pointer;
+  -webkit-appearance: none;
+  background-size:0% 100%;
+  background-image:linear-gradient(to right,#00fdff,#009dff,var(--Tcolor));
+  background-repeat:no-repeat;
+  background-color:white;
+  border-radius:5px;
+  transition:0.3s;
+  }
+
+input[type=range]::-webkit-slider-thumb {  
+  -webkit-appearance: none;/*清除系统默认样式*/  
+   height:5px;/*拖动块高度*/  
+   width:5px;/*拖动块宽度*/  
+   border-radius:50%;
+   background-color:#ff0051;
+  }  
+#PlayPagePss::-webkit-slider-thumb {  
+  -webkit-appearance: none;/*清除系统默认样式*/  
+   height:8px;/*拖动块高度*/  
+   width:8px;/*拖动块宽度*/  
+   border-radius:50%;
+   background-color:white;
+  }          

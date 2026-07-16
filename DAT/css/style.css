@@ -1,0 +1,300 @@
+/* 字体定义 */
+@font-face {
+    font-family: 'DancingScript';
+    src: url('../assets/ttf/DancingScript.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* 颜色变量定义 - 夜间模式 */
+:root {
+    --primary-color: #0080FF;
+    --secondary-color: #16213e;
+    --accent-color: #0f3460;
+    --highlight-color: #e94560;
+    --text-color: #f1f1f1;
+    --text-secondary: #b8b8b8;
+    --border-color: rgba(255, 255, 255, 0.1);
+    --card-bg: rgba(26, 26, 46, 0.8);
+    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* 日间模式颜色变量 */
+[data-theme="light"] {
+    --primary-color: #f0f8ff;
+    --secondary-color: #e6f2ff;
+    --accent-color: #cce6ff;
+    --highlight-color: #0078d4;
+    --text-color: #333333;
+    --text-secondary: #666666;
+    --border-color: rgba(0, 0, 0, 0.1);
+    --card-bg: rgba(255, 255, 255, 0.9);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+    background: var(--primary-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    line-height: 1.6;
+    transition: var(--transition);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    text-align: center;
+    padding: 3rem 0 2rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+h1 {
+    font-size: 3rem;
+    font-weight: 300;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+    letter-spacing: 1px;
+}
+
+h1 small {
+    display: block;
+    font-size: 1.2rem;
+    color: var(--highlight-color);
+    margin-bottom: 0.5rem;
+}
+
+.tagline {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+}
+
+.main-content {
+    display: flex;
+    flex: 1;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.description {
+    flex: 1;
+    padding: 2rem;
+    background: var(--card-bg);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.description h2 {
+    font-weight: 400;
+    color: var(--highlight-color);
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+.description h2:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 2px;
+    background: var(--highlight-color);
+}
+
+.description p {
+    margin-bottom: 1.5rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+    line-height: 1.7;
+}
+
+.features {
+    margin-top: 2rem;
+}
+
+.command-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+    margin-top: 1.5rem;
+}
+
+.command-item {
+    padding: 15px;
+    background: var(--secondary-color);
+    border-radius: 6px;
+    text-align: center;
+    transition: var(--transition);
+    font-weight: 300;
+    border: 1px solid var(--border-color);
+}
+
+.command-item:hover {
+    background: var(--accent-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.cta-section {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.btn {
+    background: transparent;
+    border: 1px solid var(--highlight-color);
+    color: var(--text-color);
+    padding: 12px 30px;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: var(--transition);
+    margin-bottom: 1.5rem;
+    text-decoration: none;
+    text-align: center;
+    width: 100%;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+}
+
+.btn:hover {
+    background: var(--highlight-color);
+    color: white;
+}
+
+.quick-links {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+}
+
+.quick-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: var(--transition);
+    font-size: 0.9rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border-color);
+    font-weight: 300;
+}
+
+.quick-link:hover {
+    color: var(--highlight-color);
+    border-color: var(--highlight-color);
+}
+
+footer {
+    text-align: center;
+    padding: 2rem 0;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-top: auto;
+    border-top: 1px solid var(--border-color);
+}
+
+.loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--primary-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.5s;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    border-top-color: var(--highlight-color);
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* 主题切换按钮 */
+.theme-switcher {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--highlight-color);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+    border: none;
+    transition: var(--transition);
+}
+
+.theme-switcher:hover {
+    transform: scale(1.1);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .container {
+        padding: 1.5rem;
+    }
+    
+    .main-content {
+        flex-direction: column;
+    }
+    
+    .cta-section {
+        width: 100%;
+        margin-top: 2rem;
+    }
+    
+    h1 {
+        font-size: 2.2rem;
+    }
+    
+    .description {
+        padding: 1.5rem;
+    }
+    
+    .command-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .theme-switcher {
+        bottom: 15px;
+        right: 15px;
+        width: 40px;
+        height: 40px;
+    }
+}

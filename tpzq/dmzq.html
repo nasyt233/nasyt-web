@@ -1,0 +1,65 @@
+<html>
+ <head> 
+  <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
+  <title>图片专区</title> 
+  <link rel="stylesheet" href="styles.css"> 
+  <script src="js/jq.js"></script> 
+ </head> 
+ <body id="v1"> 
+ <a href=""></a>
+  <h1 id="v2">动漫专区</h1> 
+   <a href="https://www.loliapi.com/acg/pe" id="v3">ACG图片</a>
+   <p><a href="https://api.suyanw.cn/api/ys.php" id="v3">原神二次元</a>
+   <p><a href="https://api.suyanw.cn/api/mao" id="v3">猫羽雫</a>
+   <p><a href="18/18r.html" id="v3">18+①</a>
+   <p><a href="18/18r2.html" id="v3">18+②</a>
+   <p><a href="18/18r3.html" id="v3">18+③</a>
+   <h1>真人专区</h1>
+
+
+  </body>
+
+
+
+<script>
+    (function () {
+        var a_idx = 0;
+        window.onclick = function (event) {
+            var a = new Array("❤2024幸福美满 ❤", "❤2024快乐健康❤", "❤2024事业有成❤", "❤2024心想事成❤");
+           var heart = document.createElement("b"); //创建b元素
+            heart.onselectstart = new Function('event.returnValue=false'); //防止拖动
+
+            document.body.appendChild(heart).innerHTML = a[a_idx]; //将b元素添加到页面上
+            a_idx = (a_idx + 1) % a.length;
+            heart.style.cssText = "position: fixed;left:-100%;"; //给p元素设置样式
+
+            var f = 50, // 字体大小
+                x = event.clientX - f / 2 - 30, // 横坐标
+                y = event.clientY - f, // 纵坐标
+                c = randomColor(), // 随机颜色
+                a = 1, // 透明度
+                s = 0.8; // 放大缩小
+
+            var timer = setInterval(function () { //添加定时器
+                if (a <= 0) {
+                    document.body.removeChild(heart);
+                    clearInterval(timer);
+                } else {
+                    heart.style.cssText = "font-size:16px;cursor: default;position: fixed;color:" +
+                        c + ";left:" + x + "px;top:" + y + "px;opacity:" + a + ";transform:scale(" +
+                        s + ");";
+
+                    y--;
+                    a -= 0.016;
+                    s += 0.002;
+                }
+            }, 15)
+        }
+        // 随机颜色
+        function randomColor() {
+            return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math
+                .random() * 255)) + ")";
+        }
+    }());
+</script>
+</html>

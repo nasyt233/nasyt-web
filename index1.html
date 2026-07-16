@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NAS油条</title>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <link rel="stylesheet" href="css/index_styles.css">
+</head>
+<body>
+    <header class="header">
+        <h1 class="site-title">NAS油条</h1>
+    </header>
+
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-content">
+            <div class="marquee-container">
+                <marquee behavior="scroll" direction="left" class="marquee-text">广告位招租：有意者联系🤓🤓</marquee>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><button onclick='location.href="music/index.html"' class="sidebar-button">暂无</button></li>
+                    <li><button onclick='location.href=""' class="sidebar-button">暂无</button></li>
+                    <li><button onclick='location.href=""' class="sidebar-button">暂无</button></li>
+                    <li><button onclick='location.href=""' class="sidebar-button">暂无</button></li>
+                    <li><button onclick='location.href="gxmd/gxmd.html"' class="sidebar-button">感谢名单</button></li>
+                    <li><button onclick='location.href="gxjn/gxjn.html"' class="sidebar-button">更新记录</button></li>
+                    <li><button onclick='location.href="gywm/gywm.html"' class="sidebar-button">关于我们</button></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <div class="overlay" id="overlay"></div>
+    <button class="menu-toggle" id="menu-toggle" onclick="toggleSidebar()">
+        <span class="menu-icon">☰</span>
+    </button>
+
+    <main class="main-content">
+        <div class="content-container">
+            <div class="card">
+                <img src="appIcon.png" alt="App Icon" class="card-icon">
+                <h2 class="card-title">站主: NAS油条</h2>
+                <p class="card-description">6月1日更新</p>
+                <p class="card-version">当前版本: 2.0正式版</p>
+                <div class="card-buttons">
+                    <a href="gxjn/gxjn.html" class="card-button">更新记录</a>
+                    <a href="gywm/gywm.html" class="card-button">关于我们</a>
+                    <a href="http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=Hx_sIPosPlyCEQadKKT9Zj1xkH1BHojh&authKey=DmSzzLsv1n1lK5hpYxzCSGOjWqqMlRvEPqT6Sr8ZU0oY6vCBU1AtLF%2FigKyr3VWz&noverify=0&group_code=705538247" class="card-button">文件群</a>
+                </div>
+            </div>
+
+            <div class="marquee-container">
+                <marquee behavior="scroll" direction="left" class="marquee-text">欢迎访问</marquee>
+            </div>
+
+            <div class="links-container">
+                <a href="https://gitee.com/nasyt" class="link-item">gitee项目</a>
+                <a href="https://github.com/nasyt233" class="link-item">github项目</a>
+                <a href="http://alist.class2.icu" class="link-item">galgame资源站</a>
+                <a href="tool/tool.html" class="link-item">工具专区</a>
+                <a href="mc/mc.html" class="link-item">MC专区</a>
+                <a href="tpzq/dmzq.html" class="link-item">图片专区</a>
+                <a href="ylzq/ylzq.html" class="link-item">各种API</a>
+                <a href="bgtool/music.html" class="link-item">BG音乐</a>
+            </div>
+
+            <div class="quotes-container" id="cardContainer"></div>
+
+            <footer class="footer">
+                <h5 class="footer-text">NAS油条技术交流群：610699712</h5>
+                <p id="runtime_span" class="runtime-text"></p>
+            </footer>
+        </div>
+    </main>
+
+    <a href="http://icp.luoyekj.cn/" class="icp-link" target="_blank"></a>
+
+    <button class="back-to-top" id="back-to-top">
+        <svg t="1710053351094" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2614" width="32" height="32">
+            <path d="M436.48 814.592a21.76 21.76 0 0 0-21.76 21.76v107.52a21.76 21.76 0 0 0 43.52 0v-107.52a21.76 21.76 0 0 0-21.76-21.76zM516.096 819.2a22.016 22.016 0 0 0-22.016 22.016v159.744a22.016 22.016 0 0 0 44.032 0v-158.976a22.016 22.016 0 0 0-22.016-22.784zM768 438.784C773.376 143.104 528.896 9.216 512 0c-16.384 8.704-260.864 142.592-256 438.272a192.256 192.256 0 0 0-93.696 187.392c8.192 98.304 104.448 163.584 141.056 160s25.6-30.72 25.6-30.72l12.544-51.2s54.272 81.92 71.68 81.92h197.632c15.616 0 71.68-81.92 71.68-81.92l12.544 51.2s-10.752 27.392 25.6 30.72 132.864-61.696 141.056-160a192.256 192.256 0 0 0-93.696-186.88z m-256-14.592a102.4 102.4 0 1 1 102.4-102.4 102.4 102.4 0 0 1-102.4 102.4zM588.8 819.2a21.76 21.76 0 0 0-21.76 21.76v76.8a21.76 21.76 0 1 0 43.52 0v-76.8A21.76 21.76 0 0 0 588.8 819.2z" p-id="2615"></path>
+        </svg>
+    </button>
+    <script src="js/index_JavaScript.js"></script>
+</body>
+</html>

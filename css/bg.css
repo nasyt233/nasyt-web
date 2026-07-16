@@ -1,0 +1,50 @@
+body {
+    font-family: Arial, sans-serif;
+    background: url('https://www.loliapi.com/acg/') no-repeat center center fixed;
+    background-size: cover;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    text-align: center; /* 将所有文本居中 */
+    position: relative; /* 添加相对定位 */
+    font-size: 2rem; /* 字体加大一倍 */
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.1); /* 调低透明度 */
+    margin: 2rem auto;
+    padding: 1rem;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 800px; /* 调小最大宽度 */
+    box-shadow: 8px 8px 16px #d1d9e6, -8px -8px 16px #ffffff;
+    font-size: 2rem; /* 字体加大一倍 */
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 2.5rem; /* 字体加大一倍 */
+}
+
+button {
+  font-size:100px;
+}
+.form-group {
+    margin-bottom: 1rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #333;
+    font-size: 2rem; /* 字体加大一倍 */
+}
+
+input[type="text"],
+input[type="url"],
+textarea {
+    width: 100%; /* 确保输入框占满容器宽度 */
+    max-width: 90%; /* 防止超出容器边界 */
+    padding: 1

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DARK QQ ROBOT | 群友大赏</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <script src="./script/dl.js"></script>
+</head>
+<body>
+    <div class="loading">
+        <div class="spinner"></div>
+    </div>
+    
+    <div class="overlay"></div>
+    <div class="container">
+        <header>
+            <h1>群友大赏</h1>
+            <p class="tagline">猜猜我是谁?</p>
+        </header>
+        
+        <div class="main-content">
+            <div class="description">
+                <div class="team-member">
+                    <h3>这是橘子</h3>
+                    <img src="egg.jpg" alt="橘子辣" style="max-width: 200px; border-radius: 50%;">
+                    <p>有啥想法可以发群里</p>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            &copy; 2023-2025 DARK QQ机器人 | 探索无限可能
+        </footer>
+    </div>
+
+    <script>
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.querySelector('.loading').style.opacity = '0';
+                setTimeout(function() {
+                    document.querySelector('.loading').style.display = 'none';
+                }, 500);
+            }, 800);
+        });
+    </script>
+</body>
+</html>

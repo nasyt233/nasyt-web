@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>自动跳转页面</title>
+    <script type="text/javascript">
+        // 定义跳转函数
+        function redirect() {
+            window.location.href = "/DAT/index.html"; // 替换为你想要跳转的URL
+        }
+        setTimeout(redirect, 100); // 5000毫秒 = 5秒
+    </script>
+</head>
+<body>
+    <p>页面将在0.1秒后自动跳转到 <a id="redirectLink" href="https://linux.class2.icu/DAT/index.html">DAT官网</a></p>
+    <script type="text/javascript">
+        const redirectLink = document.getElementById('redirectLink');
+        redirectLink.addEventListener('click', function(event) {
+            event.preventDefault(); // 阻止默认的链接跳转行为
+            redirect(); // 调用跳转函数立即跳转
+        });
+    </script>
+</body>
+</html>

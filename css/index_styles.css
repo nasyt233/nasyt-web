@@ -1,0 +1,321 @@
+/* 全局样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    position: relative;
+    min-height: 100vh;
+    background-image: url("https://www.loliapi.com/acg/");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    font-family: Arial, sans-serif;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 头部样式 */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.site-title {
+    font-size: 24px;
+    color: #182d00;
+    font-style: italic;
+}
+
+/* 侧边栏样式 */
+.sidebar {
+    position: fixed;
+    top: 60px;
+    left: -250px;
+    width: 250px;
+    height: calc(100% - 60px);
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+    transition: left 0.3s ease;
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.sidebar.open {
+    left: 0;
+}
+
+.sidebar-content {
+    padding: 20px;
+}
+
+.marquee-container {
+    margin-bottom: 20px;
+}
+
+.marquee-text {
+    font-size: 14px;
+    font-weight: bold;
+    color: #000000;
+}
+
+.sidebar-nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar-nav li {
+    margin: 10px 0;
+}
+
+.sidebar-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007BFF;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.sidebar-button:hover {
+    background-color: #0056b3;
+}
+
+/* 遮罩层样式 */
+.overlay {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 60px);
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    z-index: 1000;
+}
+
+.overlay.show {
+    display: block;
+}
+
+/* 菜单切换按钮 */
+.menu-toggle {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 1002;
+}
+
+.menu-icon {
+    font-size: 24px;
+    color: #182d00;
+}
+
+/* 主内容区域 */
+.main-content {
+    flex: 1;
+    padding: 80px 20px 20px 20px; /* 上边距为头部高度加额外空间 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.content-container {
+    width: 100%;
+    max-width: 800px;
+}
+
+/* 卡片样式 */
+.card {
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 0 10px rgba(100, 200, 280, 0.2);
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+    color: #000000;
+}
+
+.card-icon {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 10px;
+}
+
+.card-title {
+    font-size: 24px;
+    color: #54FF9F;
+    font-weight: 400;
+    margin-bottom: 5px;
+}
+
+.card-description {
+    font-size: 18px;
+    font-weight: 380;
+    color: #57e3ff;
+    margin-bottom: 10px;
+}
+
+.card-version {
+    font-size: 16px;
+    color: #ffffff;
+    background-color: #ff4081;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.card-buttons {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.card-button {
+    background-color: #007BFF;
+    color: #ffffff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.card-button:hover {
+    background-color: #0056b3;
+}
+
+/* 链接容器样式 */
+.links-container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.link-item {
+    width: 45%;
+    margin: 5px;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #000000;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.link-item:hover {
+    background-color: rgba(255, 255, 255, 1);
+}
+
+/* 引用容器样式 */
+.quotes-container {
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    border-radius: 5px;
+    color: #000000;
+    position: relative;
+}
+
+.quotes-container .copy-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #ff4081;
+    color: #ffffff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.quotes-container .copy-button:hover {
+    background-color: #e91e63;
+}
+
+/* 页脚样式 */
+.footer {
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 15px;
+    text-align: center;
+    color: #000000;
+}
+
+.footer-icon {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+.footer-text {
+    font-size: 16px;
+    color: #9EA0A8;
+}
+
+.runtime-text {
+    font-size: 14px;
+    color: #000000;
+    margin-top: 5px;
+}
+
+/* ICP备案链接样式 */
+.icp-link {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    color: #9EA0A8;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.icp-link:hover {
+    color: #ffffff;
+}
+
+/* 刷新按钮容器 */
+.refresh-button-container {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1003; /* 确保按钮在最上层 */
+}
+
+/* 在 styles.css 中添加 */
+
+/* 刷新按钮容器 */
+.refresh-button-container {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1003; /* 确保按钮在最上层 */
+}

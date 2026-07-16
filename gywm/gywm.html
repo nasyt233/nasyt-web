@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>关于我们</title>
+    <link rel="stylesheet" href="">
+    <style>
+        /* 全局样式 */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            color: #333333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* 头部样式 */
+        header {
+            width: 100%;
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px 0;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 40px;
+            color: #00bbff;
+            margin: 0;
+        }
+
+        /* 主内容区域 */
+        .content {
+            width: 90%;
+            max-width: 800px;
+            background-color: #ffffff;
+            padding: 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-bottom: 40px;
+        }
+
+        .content img {
+            display: block;
+            margin: 20px auto;
+            border-radius: 50%;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .content p {
+            font-size: 20px;
+            line-height: 1.6;
+            color: #333333;
+            text-align: center;
+        }
+
+        .content hr {
+            border: none;
+            border-top: 2px solid #e0e0e0;
+            margin: 30px 0;
+        }
+
+        /* 使用的语言部分 */
+        .language-section {
+            text-align: center;
+        }
+
+        .language-section h3 {
+            font-size: 30px;
+            color: #00bbff;
+            margin-bottom: 10px;
+        }
+
+        .language-section h1 {
+            font-size: 24px;
+            color: #555555;
+            margin: 0;
+        }
+
+        /* 页脚样式 */
+        footer {
+            width: 100%;
+            background-color: #ffffff;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 30px;
+            }
+
+            .content p {
+                font-size: 18px;
+            }
+
+            .language-section h3 {
+                font-size: 24px;
+            }
+
+            .language-section h1 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>关于我们</h1>
+    </header>
+
+    <div class="content">
+        <img src="https://q4.qlogo.cn/g?b=qq&nk=3213631396&s=140" alt="NAS油条头像">
+        <hr>
+        <p>本站由NAS油条制作</p>
+        <p>QQ: 3213631396</p>
+        <p>本人 "高一" 学生,计算机专业</p>
+        <img src="2.png" alt="相关图片">
+        <hr>
+        <div class="language-section">
+            <h3>使用的HTML语言编写</h3>
+            <h1>开源要二改请经作者同意</h1>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 NAS油条 版权所有</p>
+    </footer>
+</body>
+</html>

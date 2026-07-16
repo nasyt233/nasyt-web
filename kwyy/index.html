@@ -1,0 +1,324 @@
+<html lang="en" onselectstart="return false">
+ <head>
+  <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>启动页</title>
+  <script src="js/localStorage.js"></script>
+  <script src="js/wc-3.0.6.min.js"></script>
+  </head>
+  <body>
+<style>
+body{
+  margin:0;
+  padding:0;
+  background-color:black;
+  }
+#McM{
+  width:100%;
+  height:100%;
+  background-size:cover;
+  background-position: center;
+  transition:0.8s;
+  }
+</style>
+<div id="McM"></div>
+<script>
+var body=document.querySelector("body");
+var leg=false;
+var Flength=0;
+var Mdata=[];
+//文件列表
+var Bigfile="酷我音乐/Music";
+var fileArray;
+//启动页
+function setMcM(tff){
+var img=new Image();
+if(tff){
+McM.style.backgroundImage=`url(img/bg.jpeg)`;
+img.src="img/bg.jpeg";
+img.onload=()=>{
+setTimeout(()=>{
+iflytek();
+},1500);
+  };
+}else{
+getfile('/sdcard/酷我音乐/SPfile.txt',function (data){
+McM.style.backgroundImage=`url(${data})`;
+img.src=data;
+img.onload=()=>{
+setTimeout(()=>{
+iflytek();
+},1500);
+  };
+  });
+}
+}
+var PDUdata=arrNumber('PDU-data');
+if(PDUdata){
+if(PDUdata.SPstyle){
+ApplyPDUStartPage(PDUdata.SPstyle);
+}else{
+setPDUStartPage('Default');
+}
+}else{
+setTimeout(function (){
+iflytek();
+},100);
+}
+function setPDUStartPage(radio){
+PDUdata.SPstyle=radio;
+autBonly('PDU-data',PDUdata);
+ApplyPDUStartPage(radio);
+}
+function ApplyPDUStartPage(radio){
+if(radio=="Default"){
+setMcM(true);
+}else if(radio=="Random"){
+setMcM(false);
+}else if(radio=="Customize"){
+setMcM(false);
+ }
+}
+
+function iflytek(){
+if(webcat){
+if(arrNumber('Data')){
+var Liv=arrNumber('arg')[0];
+//判断是不是本地音乐
+if(Liv.lui){
+if(wc.fileExist(Bigfile)){
+fileArray=wc.getFileList(Bigfile);
+if(Liv.arg==fileArray.length){
+viakl();
+}else{
+Amusic();
+ }
+}else{
+Amusic();
+ }
+}else{
+if(wc.fileExist(Bigfile)){
+Amusic();  
+}else{
+ viakl();
+ }
+ }
+}else{
+wc.alert('正在初始化...');
+Amusic();
+ }
+}else{
+
+}
+}
+
+function Amusic(){
+wc.alert('正在更新...');
+//判断是否有文件
+if(wc.fileExist(Bigfile)){
+fileArray=wc.getFileList(Bigfile);
+for(i=0;i<fileArray.length;i++){
+if(fileArray[i].name.slice(-3)=="mp3"||fileArray[i].name.slice(-3)=="aac") Flength++;
+}
+rungo(Flength);
+}else{
+webmusic();
+}//判断结束
+
+//更新本地音乐
+function rungo(Flength){
+let i=0;
+let T=0;
+let length=fileArray.length;
+function run(){
+if(i==length) return;
+requestIdleCallback((idle)=>{
+while (idle.timeRemaining() > 0 && length){
+if(fileArray[i].name.slice(-3)=="mp3"||fileArray[i].name.slice(-3)=="aac"){
+Sname=fileArray[i].name.split(/-/);
+Author=Sname[1];
+Name=Sname[0];
+if(Author==undefined){
+Name=Sname[0];
+Name=Name.slice(0, -4);
+Author='未知歌手';
+}else{
+Author=Author.slice(0, -4);
+}
+let Src='/sdcard/'+Bigfile+'/'+fileArray[i].name;
+var momi = new RegExp("(Inst)","g");
+Name=Name.replace(momi,"纯音乐");
+Mdata.push({
+name:Name,
+singer:Author,
+src:Src
+});
+if(T==Flength-1){
+autBonly('Data',{
+data:Mdata,
+arg:length
+});
+autBonly('arg',[{
+lui:true,
+arg:fileArray.length
+}]);
+iflytek();
+wc.alert('更新完成!');
+}
+T++;
+}//判断是否是文件结束
+i++;
+}
+run();
+});
+}
+run();
+}
+//更新网络音乐
+function webmusic(){
+fetch('https://api.xfyun.club/musicAll/?sortAll=%E7%83%AD%E6%AD%8C%E6%A6%9C').then(response => response.json()).then(data => {
+for(i=0;i<data.length;i++){
+ Mdata.push({
+ name:data[i].name,
+ singer:data[i].artistsname,
+ src:data[i].url
+ });
+if(i==data.length-1){
+autBonly('Data',{
+data:Mdata,
+arg:data.length
+});
+autBonly('arg',[{
+lui:false
+}]);
+iflytek();
+wc.alert('更新完成!');
+  }
+}
+});
+}
+}
+
+function viakl(){
+var Video_data=arrNumber('Video-data');
+//获取Download视频总数
+let DocumentsArg=0;
+if(Video_data){
+if(wc.fileExist('Documents')){
+var Documents=wc.getFileList('Documents');
+for(i=0;i<Documents.length;i++){
+if(Documents[i].name.slice(-3)=="mp4")DocumentsArg++;
+ }
+}
+let DownloadArg=0;
+if(wc.fileExist('Download')){
+var Download=wc.getFileList('Download');
+for(i=0;i<Download.length;i++){
+if(Download[i].name.slice(-3)=="mp4")DownloadArg++;
+ }
+}
+//判断视频数量有没有变化
+if(Video_data.arg==(DocumentsArg+DownloadArg)){
+gohome();
+}else{
+Avideo();
+}
+}else{
+Avideo();
+}
+}
+
+//更新数据
+function Avideo(){
+var Videos=[];
+var DocumentsFlength=0;
+if(wc.fileExist('Documents')){
+var Documents=wc.getFileList('Documents');
+//获取视频总数
+for(i=0;i<Documents.length;i++){
+if(Documents[i].name.slice(-3)=="mp4")DocumentsFlength++;
+}
+Documents_rungo(Documents);
+}else{
+if(wc.fileExist('Download')){
+var Download=wc.getFileList('Download');
+Download_rungo(Download,0)
+}else{
+gohome();
+}
+}
+
+function Documents_rungo(FileList){
+let i=0;
+let h=0;
+let length=FileList.length;
+function run(){
+if(i==length) return;
+requestIdleCallback((idle)=>{
+while (idle.timeRemaining() > 0 && length){
+if(FileList[i].name.slice(-3)=="mp4"){
+Videos.push({cover:false,name:FileList[i].name,url:'/sdcard/Documents/'+FileList[i].name,time:0,size:FileList[i].size});
+if(h==DocumentsFlength-1){
+if(wc.fileExist('Download')){
+var Download=wc.getFileList('Download');
+Download_rungo(Download,DocumentsFlength)
+}else{
+gohome();
+}
+}
+h++;
+}//判断是否是文件结束
+i++;
+}
+run();
+});
+}
+run();
+}
+
+function Download_rungo(FileList,DFlength){ 
+var DownloadFlength=0;
+//获取视频总数
+for(f=0;f<FileList.length;f++){
+if(FileList[f].name.slice(-3)=="mp4")DownloadFlength++;
+}
+let i=0;
+let h=DFlength;
+let length=FileList.length;
+function run(){
+if(i==length) return;
+requestIdleCallback((idle)=>{
+while (idle.timeRemaining() > 0 && length){
+if(FileList[i].name.slice(-3)=="mp4"){
+Videos.push({cover:false,name:FileList[i].name,url:'/sdcard/Download/'+FileList[i].name,time:0,size:FileList[i].size});
+let zzh=DownloadFlength+DFlength;
+if(h==zzh-1){
+Videos.sort((a, b) => b.size - a.size);
+autBonly('Video-data',{
+ file:Videos,
+ arg:zzh
+});
+viakl();
+if(!wc.fileExist('酷我音乐/video_cover.js')){
+webcat.write('酷我音乐/video_cover.js',`var video_cover={};`);
+}
+wc.alert('更新完成!!!');
+}
+h++;
+}//判断是否是文件结束
+i++;
+}
+run();
+});
+}
+run();
+}
+}//Avideo(结束)
+
+function gohome(){
+McM.style.opacity=0;
+window.open("Home.html");
+window.close();
+}
+</script>
+ </body>
+</html>

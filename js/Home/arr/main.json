@@ -1,0 +1,36 @@
+//夜间
+var Darkness=[
+{name:'--color',
+content:'white'
+},
+{name:'--TLightcolor',
+content:'#9E9E9E'
+},
+{name:'--Tbgcolor',
+content:'#0E0E0E'
+},
+{name:'--TbgLightcolor',
+content:'#131313'
+},
+{name:'--Menubg',
+content:'0,0,0,0.8'
+},
+];
+//日间
+var Liang=[
+{name:'--color',
+content:'black'
+},
+{name:'--TLightcolor',
+content:'#999'
+},
+{name:'--Tbgcolor',
+content:'#eee'
+},
+{name:'--TbgLightcolor',
+content:'white'
+},
+{name:'--Menubg',
+content:'255,255,255,0.8'
+},
+];

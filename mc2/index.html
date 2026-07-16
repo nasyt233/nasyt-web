@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>我的世界</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            overflow: hidden; 
+            touch-action: none; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1f25, #0d1117);
+            color: #e0e0e0;
+        }
+        #game-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+        #ui-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        #crosshair {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 16px;
+            height: 16px;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+            pointer-events: none;
+        }
+        #controls {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            pointer-events: none;
+        }
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        .joystick {
+            width: 80px;
+            height: 80px;
+            background: rgba(30, 35, 40, 0.7);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            pointer-events: auto;
+        }
+        .joystick-handle {
+            width: 40px;
+            height: 40px;
+            background: rgba(200, 200, 200, 0.8);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        #jump-btn {
+            width: 70px;
+            height: 70px;
+            background: rgba(40, 120, 40, 0.7);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            pointer-events: auto;
+        }
+        #action-buttons {
+            position: absolute;
+            bottom: 120px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            pointer-events: auto;
+        }
+        .action-btn {
+            width: 60px;
+            height: 60px;
+            background: rgba(30, 35, 40, 0.7);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 14px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        #place-btn {
+            background: rgba(40, 40, 200, 0.7);
+        }
+        #break-btn {
+            background: rgba(200, 40, 40, 0.7);
+        }
+        #inventory-toggle {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 50px;
+            background: rgba(30, 35, 40, 0.7);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            pointer-events: auto;
+            z-index: 10;
+        }
+        #inventory-panel {
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%) scale(0.9);
+            width: 90%;
+            max-width: 500px;
+            max-height: 60vh;
+            overflow-y: auto;
+            background: rgba(30, 35, 40, 0.95);
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            display: none;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            opacity: 0;
+            transition: all 0.3s ease;
+            pointer-events: auto;
+        }
+        #inventory-panel.show {
+            display: flex;
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
+        }
+        .inventory-item {
+            width: 50px;
+            height: 50px;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 9px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .inventory-item:hover {
+            transform: scale(1.1);
+        }
+        .inventory-item.selected {
+            border-color: #ffcc00;
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.7);
+        }
+        .inventory-item .block-name {
+            position: absolute;
+            bottom: 2px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.6);
+            font-size: 9px;
+            padding: 2px;
+        }
+        #discard-btn {
+            width: 100%;
+            padding: 8px;
+            margin-top: 10px;
+            background: rgba(200, 50, 50, 0.7);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        #discard-btn:hover {
+            background: rgba(200, 50, 50, 0.9);
+        }
+        #hand-item {
+            position: absolute;
+            bottom: 20px;
+            right: 100px;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background-size: cover;
+            background-position: center;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            display: none;
+            pointer-events: none;
+        }
+        #hand-item.show {
+            display: block;
+        }
+        #loading {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <div id="loading">加载游戏中...</div>
+        <div id="ui-overlay">
+            <div id="crosshair"></div>
+            <div id="hand-item"></div>
+            <div id="controls">
+                <div class="control-group">
+                    <div class="joystick" id="move-joystick">
+                        <div class="joystick-handle"></div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div id="jump-btn">跳跃</div>
+                </div>
+            </div>
+            <div id="action-buttons">
+                <div class="action-btn" id="place-btn">放置</div>
+                <div class="action-btn" id="break-btn">破坏</div>
+            </div>
+            <div id="inventory-toggle">···</div>
+            <div id="inventory-panel">
+                <!-- 方块物品将通过JavaScript动态添加 -->
+                <div id="discard-btn">丢弃当前方块</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // 游戏配置
+        const CONFIG = {
+            worldSize: 16,  // 16x16的世界
+            worldHeight: 4,  // 4层高
+            player: {
+                height: 1.8,
+                radius: 0.3,
+                speed: 4,
+                jumpForce: 8,  // 增加了跳跃高度
+                lookSensitivity: 0.002
+            },
+            textures: {
+                grass: 'grass1.jpg',
+                dirt: 'grass3.jpg',
+                stone: '石.jpg',
+                wood: 'log1.jpg',
+                leaves: '叶.jpg',
+                sand: '沙.jpg',
+                bedrock: '基.jpg',
+                obsidian: '曜.jpg',
+                deepslate: '深岩.jpg',
+                juyi: '钻.jpg',
+                yaoyao: '瑶.jpg',
+                peeled_wood: '脱木.jpg',
+                amethyst: '水晶.jpg',
+                deep_iron: '深铁.jpg',
+                lapis: '青矿.jpg',
+                deep_diamond: '深钻.jpg',
+                stalactite: '钟.jpg',
+                emerald: '绿矿.jpg',
+                diamond_block: '钻块.jpg',
+                gold_block: '金块.jpg',
+                iron_block: '铁块.jpg',
+                planks: '木板.jpg'
+            }
+        };
+
+        // 游戏状态
+        const game = {
+            scene: null,
+            camera: null,
+            renderer: null,
+            player: {
+                position: new THREE.Vector3(8, 5, 8),
+                rotation: new THREE.Euler(0, Math.PI / 4, 0, 'YXZ'),
+                velocity: new THREE.Vector3(),
+                moveDirection: new THREE.Vector3(),
+                onGround: false
+            },
+            blocks: {},
+            selectedBlock: null,
+            controls: {
+                joystickActive: false,
+                touchStartX: 0,
+                touchStartY: 0,
+                isLooking: false
+            },
+            lastTime: 0,
+            textures: {},
+            inventoryOpen: false
+        };
+
+        // 方块定义
+        const BLOCKS = [
+            { id: 'grass', name: '草方块', texture: 'grass', allFaces: true },
+            { id: 'dirt', name: '泥土', texture: 'dirt', allFaces: true },
+            { id: 'stone', name: '石头', texture: 'stone', allFaces: true },
+            { id: 'wood', name: '原木', texture: 'wood', allFaces: true },
+            { id: 'sand', name: '沙子', texture: 'sand', allFaces: true },
+            { id: 'bedrock', name: '基岩', texture: 'bedrock', allFaces: true },
+            { id: 'juyi', name: '巨依块', texture: 'juyi', allFaces: true },
+            { id: 'yaoyao', name: '瑶瑶块', texture: 'yaoyao', allFaces: true },
+            { id: 'peeled_wood', name: '脱皮木', texture: 'peeled_wood', allFaces: true },
+            { id: 'amethyst', name: '紫水晶', texture: 'amethyst', allFaces: true },
+            { id: 'deep_iron', name: '深层铁矿', texture: 'deep_iron', allFaces: true },
+            { id: 'lapis', name: '青晶石', texture: 'lapis', allFaces: true },
+            { id: 'deep_diamond', name: '深层钻石', texture: 'deep_diamond', allFaces: true },
+            { id: 'stalactite', name: '钟乳石', texture: 'stalactite', allFaces: true },
+            { id: 'emerald', name: '绿宝石', texture: 'emerald', allFaces: true },
+            { id: 'diamond_block', name: '钻石块', texture: 'diamond_block', allFaces: true },
+            { id: 'gold_block', name: '金块', texture: 'gold_block', allFaces: true },
+            { id: 'iron_block', name: '铁块', texture: 'iron_block', allFaces: true },
+            { id: 'planks', name: '木板', texture: 'planks', allFaces: true },
+            { id: 'glass_pane', name: '玻璃片', texture: null, allFaces: true, transparent: true, thin: true }
+        ];
+
+        // 初始化游戏
+        async function init() {
+            await loadTextures();
+            initScene();
+            initPlayer();
+            initControls();
+            initInventory();
+            generateWorld();
+            
+            // 隐藏加载界面
+            document.getElementById('loading').style.display = 'none';
+            
+            startGameLoop();
+        }
+
+        // 加载纹理
+        async function loadTextures() {
+            const textureLoader = new THREE.TextureLoader();
+            const loadPromises = [];
+            
+            for (const block of BLOCKS) {
+                if (!block.texture) continue; // 跳过没有贴图的方块(如玻璃片)
+                
+                const textureKey = block.texture;
+                if (!game.textures[textureKey]) {
+                    loadPromises.push(new Promise((resolve) => {
+                        textureLoader.load(CONFIG.textures[textureKey], (texture) => {
+                            texture.magFilter = THREE.NearestFilter;
+                            texture.minFilter = THREE.NearestFilter;
+                            game.textures[textureKey] = texture;
+                            resolve();
+                        }, undefined, () => {
+                            // 纹理加载失败时使用替代颜色
+                            console.error(`无法加载纹理: ${CONFIG.textures[textureKey]}`);
+                            const canvas = document.createElement('canvas');
+                            canvas.width = canvas.height = 16;
+                            const ctx = canvas.getContext('2d');
+                            ctx.fillStyle = '#ff00ff'; // 品红色作为错误提示
+                            ctx.fillRect(0, 0, 16, 16);
+                            game.textures[textureKey] = new THREE.CanvasTexture(canvas);
+                            resolve();
+                        });
+                    }));
+                }
+            }
+            
+            await Promise.all(loadPromises);
+        }
+
+        function initScene() {
+            // 创建场景
+            game.scene = new THREE.Scene();
+            game.scene.background = new THREE.Color(0x87CEEB);
+            game.scene.fog = new THREE.Fog(0x87CEEB, 10, 30);
+            
+            // 创建相机
+            game.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100);
+            updateCamera();
+            
+            // 创建渲染器
+            game.renderer = new THREE.WebGLRenderer({ antialias: true });
+            game.renderer.setSize(window.innerWidth, window.innerHeight);
+            game.renderer.shadowMap.enabled = true;
+            document.getElementById('game-container').appendChild(game.renderer.domElement);
+            
+            // 添加光照
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            game.scene.add(ambientLight);
+            
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(1, 2, 1);
+            directionalLight.castShadow = true;
+            game.scene.add(directionalLight);
+        }
+
+        function initPlayer() {
+            // 确保出生点在平台上
+            game.player.position.set(8, CONFIG.worldHeight + 1, 8);
+            updateCamera();
+        }
+
+        function initControls() {
+            const moveJoystick = document.getElementById('move-joystick');
+            const moveHandle = moveJoystick.querySelector('.joystick-handle');
+            const jumpBtn = document.getElementById('jump-btn');
+            const placeBtn = document.getElementById('place-btn');
+            const breakBtn = document.getElementById('break-btn');
+            
+            // 移动控制
+            moveJoystick.addEventListener('touchstart', (e) => {
+                game.controls.joystickActive = true;
+                e.preventDefault();
+            }, { passive: false });
+            
+            document.addEventListener('touchmove', (e) => {
+                if (!game.controls.joystickActive && !game.controls.isLooking) return;
+                
+                const touch = Array.from(e.touches).find(t => {
+                    const rect = moveJoystick.getBoundingClientRect();
+                    return t.clientX >= rect.left && t.clientX <= rect.right &&
+                           t.clientY >= rect.top && t.clientY <= rect.bottom;
+                });
+                
+                if (touch && game.controls.joystickActive) {
+                    const rect = moveJoystick.getBoundingClientRect();
+                    const centerX = rect.left + rect.width / 2;
+                    const centerY = rect.top + rect.height / 2;
+                    
+                    const dx = touch.clientX - centerX;
+                    const dy = touch.clientY - centerY;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    const maxDistance = rect.width / 2;
+                    
+                    const angle = Math.atan2(dy, dx);
+                    const moveX = Math.cos(angle);
+                    const moveZ = Math.sin(angle);
+                    
+                    // 更新摇杆手柄位置
+                    const handleX = Math.min(maxDistance, distance) * Math.cos(angle);
+                    const handleY = Math.min(maxDistance, distance) * Math.sin(angle);
+                    moveHandle.style.transform = `translate(${handleX}px, ${handleY}px)`;
+                    
+                    // 设置移动方向
+                    game.player.moveDirection.x = moveX;
+                    game.player.moveDirection.z = -moveZ;
+                } 
+                // 视角控制
+                else if (!touch && game.controls.isLooking) {
+                    const movementX = e.touches[0].clientX - game.controls.touchStartX;
+                    const movementY = e.touches[0].clientY - game.controls.touchStartY;
+                    
+                    game.player.rotation.y -= movementX * CONFIG.player.lookSensitivity;
+                    game.player.rotation.x -= movementY * CONFIG.player.lookSensitivity;
+                    game.player.rotation.x = Math.max(-Math.PI/2, Math.min(Math.PI/2, game.player.rotation.x));
+                    
+                    game.controls.touchStartX = e.touches[0].clientX;
+                    game.controls.touchStartY = e.touches[0].clientY;
+                }
+                
+                e.preventDefault();
+            }, { passive: false });
+            
+            document.addEventListener('touchend', (e) => {
+                game.controls.joystickActive = false;
+                game.controls.isLooking = false;
+                moveHandle.style.transform = 'translate(0, 0)';
+                game.player.moveDirection.x = 0;
+                game.player.moveDirection.z = 0;
+            });
+            
+            // 视角控制
+            game.renderer.domElement.addEventListener('touchstart', (e) => {
+                const rect = moveJoystick.getBoundingClientRect();
+                const isJoystickTouch = Array.from(e.touches).some(t => 
+                    t.clientX >= rect.left && t.clientX <= rect.right &&
+                    t.clientY >= rect.top && t.clientY <= rect.bottom
+                );
+                
+                if (!isJoystickTouch && e.touches.length === 1 && !game.inventoryOpen) {
+                    game.controls.isLooking = true;
+                    game.controls.touchStartX = e.touches[0].clientX;
+                    game.controls.touchStartY = e.touches[0].clientY;
+                }
+                e.preventDefault();
+            }, { passive: false });
+            
+            // 跳跃按钮
+            jumpBtn.addEventListener('touchstart', (e) => {
+                if (game.player.onGround) {
+                    game.player.velocity.y = CONFIG.player.jumpForce;
+                    game.player.onGround = false;
+                }
+                e.preventDefault();
+            }, { passive: false });
+            
+            // 放置按钮
+            placeBtn.addEventListener('touchstart', (e) => {
+                if (game.selectedBlock) {
+                    placeBlock();
+                }
+                e.preventDefault();
+            }, { passive: false });
+            
+            // 破坏按钮
+            breakBtn.addEventListener('touchstart', (e) => {
+                breakBlock();
+                e.preventDefault();
+            }, { passive: false });
+        }
+
+        function initInventory() {
+            const inventoryToggle = document.getElementById('inventory-toggle');
+            const inventoryPanel = document.getElementById('inventory-panel');
+            const discardBtn = document.getElementById('discard-btn');
+            const handItem = document.getElementById('hand-item');
+            
+            // 添加方块到物品栏
+            BLOCKS.forEach(block => {
+                const item = document.createElement('div');
+                item.className = 'inventory-item';
+                item.dataset.blockId = block.id;
+                
+                if (block.texture) {
+                    item.style.backgroundImage = `url(${CONFIG.textures[block.texture]})`;
+                } else {
+                    // 玻璃片特殊处理
+                    item.style.backgroundColor = 'rgba(200, 200, 255, 0.3)';
+                    item.style.border = '2px solid white';
+                }
+                
+                const name = document.createElement('div');
+                name.className = 'block-name';
+                name.textContent = block.name;
+                
+                item.appendChild(name);
+                inventoryPanel.insertBefore(item, discardBtn);
+                
+                item.addEventListener('touchstart', (e) => {
+                    game.selectedBlock = block.id;
+                    
+                    if (block.texture) {
+                        handItem.style.backgroundImage = `url(${CONFIG.textures[block.texture]})`;
+                    } else {
+                        handItem.style.backgroundImage = '';
+                        handItem.style.backgroundColor = 'rgba(200, 200, 255, 0.3)';
+                        handItem.style.border = '2px solid white';
+                    }
+                    
+                    handItem.classList.add('show');
+                    inventoryPanel.classList.remove('show');
+                    game.inventoryOpen = false;
+                    e.preventDefault();
+                }, { passive: false });
+            });
+            
+            // 切换物品栏显示
+            inventoryToggle.addEventListener('touchstart', (e) => {
+                game.inventoryOpen = !game.inventoryOpen;
+                inventoryPanel.classList.toggle('show', game.inventoryOpen);
+                e.preventDefault();
+            }, { passive: false });
+            
+            // 丢弃按钮
+            discardBtn.addEventListener('touchstart', (e) => {
+                game.selectedBlock = null;
+                handItem.classList.remove('show');
+                inventoryPanel.classList.remove('show');
+                game.inventoryOpen = false;
+                e.preventDefault();
+            }, { passive: false });
+        }
+
+        function generateWorld() {
+            // 生成16x16的超平坦世界
+            for (let x = 0; x < CONFIG.worldSize; x++) {
+                for (let z = 0; z < CONFIG.worldSize; z++) {
+                    // 底层基岩
+                    addBlock(x, 0, z, 'bedrock');
+                    
+                    // 中间石头
+                    for (let y = 1; y < CONFIG.worldHeight-1; y++) {
+                        addBlock(x, y, z, 'stone');
+                    }
+                    
+                    // 顶层泥土
+                    addBlock(x, CONFIG.worldHeight-1, z, 'dirt');
+                }
+            }
+            
+            // 确保出生点区域没有方块
+            for (let x = 7; x <= 9; x++) {
+                for (let z = 7; z <= 9; z++) {
+                    for (let y = 1; y <= CONFIG.worldHeight; y++) {
+                        removeBlock(x, y, z);
+                    }
+                }
+            }
+            
+            // 在出生点创建一个平台
+            for (let x = 6; x <= 10; x++) {
+                for (let z = 6; z <= 10; z++) {
+                    addBlock(x, CONFIG.worldHeight-1, z, 'stone');
+                }
+            }
+            
+            // 清除出生点正上方的方块
+            removeBlock(8, CONFIG.worldHeight, 8);
+        }
+
+        function addBlock(x, y, z, type) {
+            const key = `${x},${y},${z}`;
+            if (game.blocks[key]) return;
+            
+            const blockDef = BLOCKS.find(b => b.id === type);
+            if (!blockDef) return;
+            
+            let materials;
+            
+            if (blockDef.id === 'glass_pane') {
+                // 玻璃片特殊处理
+                const glassMaterial = new THREE.MeshStandardMaterial({
+                    color: 0xffffff,
+                    transparent: true,
+                    opacity: 0.3,
+                    side: THREE.DoubleSide
+                });
+                
+                // 创建一个薄的玻璃片
+                const width = 1/16;
+                const geometry = new THREE.BoxGeometry(width, 1, 1);
+                const glass = new THREE.Mesh(geometry, glassMaterial);
+                glass.position.set(x + 0.5, y + 0.5, z + 0.5);
+                game.scene.add(glass);
+                game.blocks[key] = { type, mesh: glass, x, y, z };
+                return;
+            }
+            
+            const texture = game.textures[blockDef.texture];
+            
+            if (blockDef.allFaces) {
+                const material = new THREE.MeshStandardMaterial({ 
+                    map: texture,
+                    transparent: !!blockDef.transparent,
+                    alphaTest: 0.5
+                });
+                materials = Array(6).fill(material);
+            } else {
+                // 如果有不同面纹理可以在这里处理
+                materials = Array(6).fill(new THREE.MeshStandardMaterial({ map: texture }));
+            }
+            
+            const block = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), materials);
+            block.position.set(x + 0.5, y + 0.5, z + 0.5);
+            block.castShadow = true;
+            block.receiveShadow = true;
+            game.scene.add(block);
+            game.blocks[key] = { type, mesh: block, x, y, z };
+        }
+
+        function removeBlock(x, y, z) {
+            const key = `${x},${y},${z}`;
+            if (game.blocks[key]) {
+                game.scene.remove(game.blocks[key].mesh);
+                delete game.blocks[key];
+                return true;
+            }
+            return false;
+        }
+
+        function breakBlock() {
+            // 射线检测获取目标方块
+            const raycaster = new THREE.Raycaster();
+            raycaster.setFromCamera(new THREE.Vector2(0, 0), game.camera);
+            const intersects = raycaster.intersectObjects(
+                Object.values(game.blocks).map(b => b.mesh)
+            );
+            
+            if (intersects.length > 0) {
+                const intersect = intersects[0];
+                const point = intersect.point;
+                const normal = intersect.face.normal;
+                
+                // 计算方块位置
+                const blockX = Math.floor(point.x - normal.x * 0.1);
+                const blockY = Math.floor(point.y - normal.y * 0.1);
+                const blockZ = Math.floor(point.z - normal.z * 0.1);
+                
+                removeBlock(blockX, blockY, blockZ);
+            }
+        }
+
+        function placeBlock() {
+            if (!game.selectedBlock) return;
+            
+            // 射线检测获取目标位置
+            const raycaster = new THREE.Raycaster();
+            raycaster.setFromCamera(new THREE.Vector2(0, 0), game.camera);
+            const intersects = raycaster.intersectObjects(
+                Object.values(game.blocks).map(b => b.mesh)
+            );
+            
+            if (intersects.length > 0) {
+                const intersect = intersects[0];
+                const point = intersect.point;
+                const normal = intersect.face.normal;
+                
+                // 计算放置位置
+                const placeX = Math.floor(point.x + normal.x * 0.1);
+                const placeY = Math.floor(point.y + normal.y * 0.1);
+                const placeZ = Math.floor(point.z + normal.z * 0.1);
+                
+                // 检查位置是否可用
+                const key = `${placeX},${placeY},${placeZ}`;
+                if (!game.blocks[key]) {
+                    addBlock(placeX, placeY, placeZ, game.selectedBlock);
+                }
+            }
+        }
+
+        function checkCollision(newPos) {
+            const playerRadius = CONFIG.player.radius;
+            const playerHeight = CONFIG.player.height;
+            
+            // 检查脚部位置
+            const feetY = Math.floor(newPos.y - playerHeight/2);
+            
+            // 检查头部位置
+            const headY = Math.floor(newPos.y + playerHeight/2);
+            
+            // 检查周围方块
+            for (let x = Math.floor(newPos.x - playerRadius); x <= Math.floor(newPos.x + playerRadius); x++) {
+                for (let z = Math.floor(newPos.z - playerRadius); z <= Math.floor(newPos.z + playerRadius); z++) {
+                    // 检查脚部碰撞
+                    if (game.blocks[`${x},${feetY},${z}`]) {
+                        return true;
+                    }
+                    // 检查头部碰撞
+                    if (game.blocks[`${x},${headY},${z}`]) {
+                        return true;
+                    }
+                }
+            }
+            
+            return false;
+        }
+
+        function updateCamera() {
+            game.camera.position.copy(game.player.position);
+            game.camera.rotation.copy(game.player.rotation);
+        }
+
+        function updatePlayer(deltaTime) {
+            // 重力
+            game.player.velocity.y -= 15 * deltaTime;
+            
+            // 移动玩家
+            const moveSpeed = CONFIG.player.speed * deltaTime;
+            const moveVector = game.player.moveDirection.clone().multiplyScalar(moveSpeed);
+            
+            if (moveVector.length() > 0) {
+                // 计算新位置
+                const newPos = game.player.position.clone();
+                
+                //应用水平移动
+                const forward = new THREE.Vector3(0, 0, -1).applyQuaternion(game.camera.quaternion);
+                const right = new THREE.Vector3(1, 0, 0).applyQuaternion(game.camera.quaternion);
+                
+                newPos.add(right.multiplyScalar(moveVector.x));
+                newPos.add(forward.multiplyScalar(moveVector.z));
+                
+                // 简单碰撞检测
+                if (!checkCollision(newPos)) {
+                    game.player.position.x = newPos.x;
+                    game.player.position.z = newPos.z;
+                }
+            }
+            
+            // 应用垂直移动 (跳跃/重力)
+            const newYPos = game.player.position.y + game.player.velocity.y * deltaTime;
+            const tempPos = game.player.position.clone();
+            tempPos.y = newYPos;
+            
+            if (!checkCollision(tempPos)) {
+                game.player.position.y = newYPos;
+                game.player.onGround = false;
+            } else {
+                if (game.player.velocity.y < 0) {
+                    game.player.onGround = true;
+                }
+                game.player.velocity.y = 0;
+            }
+            
+            // 更新相机
+            updateCamera();
+        }
+
+        function startGameLoop() {
+            const loop = (time) => {
+                const deltaTime = Math.min(0.1, (time - game.lastTime) / 1000);
+                game.lastTime = time;
+                
+                updatePlayer(deltaTime);
+                game.renderer.render(game.scene, game.camera);
+                requestAnimationFrame(loop);
+            };
+            requestAnimationFrame(loop);
+        }
+
+        // 窗口大小调整
+        window.addEventListener('resize', () => {
+            game.camera.aspect = window.innerWidth / window.innerHeight;
+            game.camera.updateProjectionMatrix();
+            game.renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // 启动游戏
+        window.addEventListener('load', init);
+    </script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DARK QQ ROBOT | 功能展示</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <script src="./script/dl.js"></script>
+</head>
+<body>
+    <div class="loading">
+        <div class="spinner"></div>
+    </div>
+    
+    <div class="overlay"></div>
+    <div class="container">
+        <header>
+            <h1>功能</h1>
+            <p class="tagline">以下将为你展示bot功能</p>
+        </header>
+        
+        <div class="main-content">
+            <div class="description">
+                <div class="team-member">
+                    <h3>1.文生图</h3>
+                    <img src="assets/pic/TTP1.jpg" alt="文生图示例" width="200">
+                    
+                    <h3>2.历史上的今天</h3>
+                    <img src="assets/pic/HS.jpg" width="200"/>
+                    
+                    <h3>3.签到</h3>
+                    <img src="assets/pic/QD.jpg" width="200"/>
+                    
+                    <h3>4.背包</h3>
+                    <img src="assets/pic/b.jpg" width="200"/>
+                </div>
+            </div>
+            <div class="cta-section">
+                <a href="imdex.html" class="btn">返回</a>
+                
+                <div class="quick-links">
+                    <a href="about.html" class="quick-link" title="了解更多关于DARK QQ机器人">了解更多</a>
+                    <a href="egg.jpg" class="quick-link">彩蛋</a>
+                    <a href="qyds.html" class="quick-link">群里的朋友看这里</a>
+                    <a href="https://www.bilibili.com/" class="quick-link" target="_blank" title="访问我们的B站主页">bilibili</a>
+                    <a href="#tutorial" class="quick-link" title="查看使用教程">使用教程</a>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            &copy; 2023-2025 DARK QQ机器人 | 探索无限可能
+        </footer>
+    </div>
+
+    <script>
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.querySelector('.loading').style.opacity = '0';
+                setTimeout(function() {
+                    document.querySelector('.loading').style.display = 'none';
+                }, 500);
+            }, 800);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,409 @@
+/*左侧边栏弹出左侧边栏*/
+.Eject{
+  width:20px;
+  aspect-ratio:1/1;
+  float:left;
+  margin:7%;
+  position:relative;
+  -webkit-mask:url('../img/To/navnav.png')100% 100%/cover;
+  -webkit-mask-size:100%;
+  -webkit-mask-repeat: no-repeat;
+  background-color:black;
+  }
+  
+/*左侧边栏*/
+#LeftSidebar{
+  top:0;
+  width:100%;
+  height:100%;
+  position:fixed;
+  z-index:10;
+  display:none;
+  transition:0.3s;
+  }
+/*主体*/
+#Lcontent{
+  position:absolute;
+  width:92%;
+  height:100%;
+  left:-92%;
+  opacity:0;
+  transition:0.3s;
+  }
+/*侧边返*/
+#Lreturn{
+  position:absolute;
+  top:0;
+  right:0;
+  width:7%;
+  height:100%;
+    }
+#Ckuang{
+  position:relative;
+  width:100%;
+  height:100%;
+  }
+/*封面*/
+#CFkuang{
+  width:100%;
+  height:23%;
+  transition:0.3s;
+  background-size:cover;
+  background-position: center;
+  }
+ .CFkuaiS,.CFkuaiX{
+  width:100%;
+  position:relative;
+   }
+.CFkuaiS{
+  height:40%;
+  color:white;
+  display:flex;
+  background:rgba(0,0,0,0.1);
+  }
+.CFkuaiX{
+  height:60%;
+  background-image: linear-gradient(to bottom,rgba(0,0,0,0.1),rgba(0,0,0,0.9));
+  }
+ #rian{
+   text-align:center;
+   font-size:3em;
+   font-weight:400;
+   text-shadow: rgba(0,0,0,.8) 1px 1px 0;
+   margin:4% 5%;
+   }
+ #rich{
+   text-align:center;
+   font-size:2me;
+   color:#eee;
+   text-shadow: rgba(0,0,0,.4) 1px 1px 0;
+   margin:6% -5%;
+   }
+
+ /*名言名句*/
+#Famous{
+  width:96%;
+  height:80%;
+  top:10%;
+  left:2%;
+  font-size:0.9em;
+  color:white;
+  position:absolute;
+  overflow:hidden;
+  transition:0.8s;
+  text-shadow: rgba(0,0,0,.8) 0.8px 0.8px 0;
+  }
+#Famous b{
+   float:right;
+   position:absolute;
+   right:0;
+   bottom:25%;
+   z-index:1;
+   font-weight:800;
+   font-size:0.8em;
+   color:white;
+   }
+/*主体*/
+#CNkuang{
+  position:absolute;
+  bottom:0;
+  width:100%;
+  height:80%;
+  color:var(--color);
+  transition:0.8s;
+  background-color:var(--TbgRcolor);
+  border-radius:20px 20px 0 0;
+    }
+ .CNkuang-top{
+  width:100%;
+  height:10%;
+  display:flex;
+  position:relative;
+  background-color:var(--TbgQcolor);
+  border-radius:20px 20px 0 0;
+    }
+/*人物信息栏*/
+.RWxx{
+  display:flex;
+  align-items: center;
+  margin:0 5%;
+  width:90%;
+  height:100%;
+  position:relative;
+  }
+
+ /*人物头像*/
+#Ctouxian{
+  position:absolute;
+  top:-35%;
+  height:85%;
+  aspect-ratio:1/1;
+  border-radius:50%;
+  background-position: center;
+  background-size:cover;
+  border:2.5px solid var(--TbgQcolor);
+  }
+ /*昵称*/
+#Cnicheng{
+  position:absolute;
+  bottom:5%;
+  color:var(--color);
+  height:34%;
+  z-index:1;
+  display:flex;
+  font-size:1em;
+  overflow:hidden;
+  white-space:nowrap;
+  align-items: center;
+      }
+#clockin{
+  position:absolute;
+  right:0;
+  top:20%;
+  height:60%;
+  aspect-ratio:1/1;
+  color:var(--Tcolor);
+  font-size:1.2em;
+  font-weight:600;
+  display:flex;
+  justify-content: center;
+  }
+#clockin:before{
+  content: "";
+  width:100%;
+  height:100%;
+  -webkit-mask:url('../img/Home/icon/clockin.png')100% 100%/cover;
+  -webkit-mask-size:100%;
+  -webkit-mask-repeat: no-repeat;
+  background-color:var(--Tcolor);
+  }
+#tim{
+  position:absolute;
+  bottom:8%;
+  }
+ /*主要功能栏*/
+.CMainly{
+  width:100%;
+  height:78.5%;
+  position:absolute;
+  bottom:10%;
+    }
+/*形象皮肤*/
+#ImageSkin{
+  position:absolute;
+  max-height:90%;
+  max-width:70%;
+  right:0;
+  bottom:0;
+  }
+ /*侧边栏底部栏*/
+.Cbottom{
+  width:100%;
+  height:10%;
+  display:flex;
+  transition:0.3s;
+  position:absolute;
+  bottom:0;
+  background-color:var(--TbgQcolor);
+  }
+.Cbkaung{
+  width:20vw;
+  margin:auto;
+  text-align:center;
+  font-size:1.3vh;
+  }
+.Set{
+  -webkit-mask:url('../img/Home/icon/set.png')100% 100%/cover;
+  }
+.Period{
+  -webkit-mask:url('../img/Home/icon/sun.png')100% 100%/cover;
+  }
+.Skin{
+  -webkit-mask:url('../img/Home/icon/skin.png')100% 100%/cover;
+  }
+.Other{
+  -webkit-mask:url('../img/Home/icon/Other.png')100% 100%/cover;
+  }
+/*图标样式*/
+.Cicon{
+  height:30%;
+  aspect-ratio:1/1;
+  margin:auto;
+  -webkit-mask-size:100%;
+  -webkit-mask-repeat: no-repeat;
+  background-color:var(--Tcolor);
+  }
+
+/*页面*/
+.RightSidebar{
+  top:0;
+  width:100vw;
+  height:100%;
+  z-index:10;
+  position:fixed;
+  display:none;
+  transition:0.3s;
+  background-color:var(--TbgRcolor);
+  }
+/*返回*/
+.Return{
+position:absolute;
+height:70%;
+left:5%;
+top:15%;
+aspect-ratio:1/1;
+-webkit-mask:url('../img/To/return.png')100% 100%/cover;
+-webkit-mask-size:100%;
+-webkit-mask-repeat: no-repeat;
+background-color:var(--Tcolor);
+  }
+.Ptop{
+  width:100%;
+  height:15%;
+  position:relative;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  background-color:var(--TbgQcolor);
+  }
+
+.Ptop_lk{
+  width:100%;
+  position:relative;
+  height:25%;
+  display:flex;
+  }
+
+/*个性装扮*/
+.PersonalizedDressUp_title{
+  color:var(--color);
+  font-size:2.2vh;
+  }
+.PersonalizedDressUp_rebd{
+  position:absolute;
+  right:5%;
+  height:25px;
+  aspect-ratio:1/1;
+  -webkit-mask:url('../img/Home/icon/meskin.png')100% 100%/cover;
+  -webkit-mask-size:100%;
+  -webkit-mask-repeat: no-repeat;
+  }
+.PersonalizedDressUp_daohanglan{
+  position:absolute;
+  width:100%;
+  height:25%;
+  bottom:0;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  }
+.PersonalizedDressUp_daohanglan button{
+  border:none;
+  flex:1 0 0;
+  height:100%;
+  text-align:center;
+  color:var(--color);
+  font-size:1.8vh;
+  background-color:Transparent;
+  }
+.PDU_zd{
+  width:96%;
+  margin:2%;
+  margin-bottom:0;
+  background-color:var(--TbgQcolor);
+  }
+.PDU_zd b{
+  margin:2%;
+  font-size:2.5vh;
+  color:var(--Tcolor);
+  }
+#monkey{
+  max-width:100%;
+  max-height:50vh;
+  }
+.PDU_right{
+  position:absolute;
+  right:2%;
+  }
+.PDU-radio{
+  height:40%;
+  aspect-ratio:1/1;
+  bottom:30%;
+  }
+.PDU_ztsL{
+  width:96%;
+  height:6vh;
+  margin:0 2%;
+  color:var(--color);
+  font-size:1.8vh;
+  transition:0.3s;
+  display:flex;
+  align-items: center;
+  position:relative;
+  border-bottom:1px solid var(--TbgRcolor);
+  }
+.bod{
+  background-repeat:no-repeat;
+  background-position:center;
+  background-size:0% 100%;
+  background-color:rgba(0, 0, 0,0);
+  background-image:linear-gradient(to right,rgba(0,0,0,0),rgba(0,0,0,0));
+  }
+.bod:active{
+  background-size:100% 100%;
+  background-image:linear-gradient(to right,rgba(0,0,0,0.15),rgba(0,0,0,0.15));
+  background-color:rgba(0, 0, 0,0.15);
+  }
+
+.ztsL_ming{
+  position:absolute;
+  font-size:1.8vh;
+  top:12%;
+  }
+.ztsL_jj{
+  position:absolute;
+  bottom:12%;
+  color:var(--Rcolor);
+  font-size:1.5vh;
+  line-height:1.5vh;
+  }
+.PDU_Palette{
+  width:25px;
+  aspect-ratio:1/1;
+  -webkit-mask:url('../img/Home/icon/Palette.png')100% 100%/cover;
+  -webkit-mask-size:100%;
+  -webkit-mask-repeat: no-repeat;
+  background-color:var(--Tcolor);
+  }
+#PDUsetcolor{
+  outline:none;
+  border:none;
+  border-radius:50%;
+  position:absolute;
+  right:2%;
+  width:5vh;
+  height:5.25vh;
+  background-color:Transparent;
+  }
+ #PDUsetcolor::-webkit-color-swatch{
+  position:relative;
+  border-radius:50%;
+  border:0.25vh solid #bbb;
+   }
+ /*我的信息*/
+ .Tx{
+ 
+   }
+ #Tx_tx{
+   height:80%;
+   border-radius:5px;
+   aspect-ratio:1/1;
+   background-position: center; 
+   background-size:cover;
+   }
+ #Tx_name{
+   color:var(--Tcolor);
+   }
+ #Tx_PBW{
+   height:80%;
+   }

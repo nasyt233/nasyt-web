@@ -1,0 +1,254 @@
+<html lang="en" onselectstart="return false">
+ <head>
+  <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>梦生缘</title>
+  <head>
+  <link href="./css/Home.css" rel="stylesheet">
+  <script src="js/tt.js"></script>
+  <script src="js/Windowd.js"></script>
+  <script src="js/ThemeColor.js"></script>
+  <script src="js/localStorage.js"></script>
+  <script src="js/Home/arr/main.js"></script>
+  <script src="js/Home/index.js"></script>
+  <script src="js/Home/xiang.js"></script>
+  <script src="js/Home/Home.js" defer></script>
+  <script src="/sdcard/酷我音乐/video_cover.js" defer></script>
+  </head>
+<body>
+<input type="file" id="PDUfile" style="display:none;"  accept='image/*'/>
+<div id="McM"></div>
+<div id="Fixed">
+
+</div>
+<!--视频播放器-->
+<div id="VideoplayerK">
+<div id="unlock">
+<video  id="Videoplayer_video" poster="none"></video>
+<div id="V_control">
+<div style="position:relative;width:100%;height:100%;display:flex;align-items: center;">
+<div id="Vc_top">
+<!--返回-->
+<div class="Jreturn" onclick="Hidevideoplayer();"></div><address id="video_name">视频名</address><div id="Vt_meskin"></div></div>
+<div id="Vc_lock"></div>
+<div id="Vc_bottom">
+<div class="vb_box" style="justify-content:center;"><time id="video_Ct" >00:00</time><input type="range" id="video_Pb" max="100" value="0" step="0.01"/><time id="video_Dt">00:00</time></div>
+<div class="vb_box"><div id="Vc_spin"></div></div></div></div></div></div></div>
+<!--添加的音乐-->
+<div id="Musicadded_mcm"></div>
+<div id="Musicadded_page">
+<div class="PDU_ztsL" style="justify-content:center;background-color:Transparent;"><b>音乐列表</b></div>
+<div id="Musicadded_kuang"><div id="Kui" class="Kui"><div class="vi"></div></div></div>
+</div>
+<!--选项菜单-->
+<div id="Doption_smenu_mcm" class="DML"><div id="Doption_smenu" class="D-box"></div></div>
+<!--提示-->
+<div id="tip"></div>
+<!--提示2-->
+<aside id="PopTip">
+<div class="PopTip_title_box"><b id="PopTip_title">标题</b></div>
+<div style="width:90%;padding:0 5% 5% 0%;display:flex;"><img src="img/To/remind.png" style="width:30px;height:30px;padding:0 25px;animation:Bounce 0.5s infinite alternate;"/><div id="PopTip_content"></div></div>
+</aside>
+<!--左侧边栏-->
+<aside id="LeftSidebar">
+<!--主体-->
+<div id="Lcontent">
+<div id="Ckuang">
+<!--侧边栏封面-->
+<div id="CFkuang">
+<div class="CFkuaiS">
+<!--时间-->
+<div id="rian"></div>
+<div id="rich"></div>
+<div id="Persmenu"  class="PersonalizedDressUp_rebd" style="background-color:#fff;top:4vh;"></div>
+</div>
+<!--年轻-->
+<div class="CFkuaiX">
+<!--名言名句栏-->
+<div id="Famous"></div>
+</div>
+</div>
+<div id="CNkuang">
+<div class="CNkuang-top">
+<!--人物信息栏-->
+<div class="RWxx">
+<!--头像-->
+<div id="Ctouxian"></div>
+<!--昵称--> 
+<b id="Cnicheng" onclick="Setnickname()"></b> 
+<div id="clockin" onclick="clockin()"><samp id="tim">0</samp></div>
+</div>
+</div>
+<!--底部功能栏-->
+<div class="CMainly">
+<img id="ImageSkin" src="img/To/ImageSkin.png"/>
+</div>
+<!--底部功能栏-->
+<div class="Cbottom">
+<div class="Cbkaung"><div class="Cicon Set"></div><span>设置</span></div>
+<div class="Cbkaung"><div class="Cicon Period" id="Period"></div><span id="tts">日间</span></div>
+<div class="Cbkaung"><div class="Cicon Skin" id="Personalized"></div><span>个性装扮</span></div>
+<div class="Cbkaung"><div class="Cicon Other"></div><span>其他</span></div>
+  </div>
+ </div>
+</div>
+</div>
+<div id="Lreturn" onclick="Lif()"></div>
+</aside>
+
+<!--我的信息-->
+<aside id="setTx" class="RightSidebar">
+<div class="Ptop PDU-container">
+<!--返回-->
+<div class="Ptop_lk" style="align-items:center;justify-content: center;">
+<div class="Return" id="setTx_Return"></div>
+<h4 class="PersonalizedDressUp_title">我的信息</h4>
+</div>
+</div>
+ <div id="Tx_kuang" class="kuang">
+<div class="xiang PDU_xiang">
+<div class="PDU_zd">
+<div class="PDU_ztsL Tx_tiao bod" data-title="头像"><samp class="ztsL_ti">头像</samp><div id="Tx_tx" class="PDU_right"></div></div>
+<div class="PDU_ztsL Tx_tiao bod" data-title="昵称"><samp class="ztsL_ti">昵称</samp><span id="Tx_name"  class="PDU_right"></span></div>
+<div class="PDU_ztsL Tx_tiao bod" data-title="个人背景墙"><samp class="ztsL_ti">个人背景墙</samp><img id="Tx_PBW"  class="PDU_right"/></div>
+ </div>
+ </div>
+</div>
+</aside>
+
+<!--个性装扮侧边栏-->
+<aside id="PersonalizedDressUp" class="RightSidebar">
+<div class="Ptop PDU-container">
+<!--返回-->
+<div class="Ptop_lk" style="align-items:center;justify-content: center;">
+<div class="Return" id="PersonalizedDressUp_Return"></div>
+<h4 class="PersonalizedDressUp_title">我的装扮</h4>
+<div class="PersonalizedDressUp_rebd" style="background-color:var(--Tcolor);"></div>
+</div>
+<div class="PersonalizedDressUp_daohanglan"><button>主题色</button><button>启动页</button><button>形象皮肤</button><button>首页封面</button></div>
+</div>
+ <div id="PDU_kuang" class="kuang">
+<div class="xiang PDU_xiang">
+<div class="PDU_zd">
+<b>主题色</b>
+<label><div class="PDU_ztsL bod"><i class="PDU_Palette"></i><span>设置主题色</span><input type="color" id="PDUsetcolor" value="#9600ff"/></div></label>
+</div>
+</div>
+<div class="xiang PDU_xiang">
+<div class="PDU_zd">
+<b>启动页</b>
+<label><div class="PDU_ztsL bod"><samp class="ztsL_ming">默认</samp><input type="radio" class="PDU-radio PDU_right" name="qdy" value="Default"><small class="ztsL_jj">默认背景图</small></div></label>
+<label><div class="PDU_ztsL bod"><samp class="ztsL_ming">随机</samp><input type="radio" class="PDU-radio PDU_right" name="qdy" value="Random"><small class="ztsL_jj">随机网络图片</small></div></label>
+<label><div class="PDU_ztsL bod"><samp class="ztsL_ming">自定启动页</samp><input type="radio" class="PDU-radio PDU_right" name="qdy" value="Customize"><small class="ztsL_jj">默认相册选取</small></div></label>
+</div>
+ <div class="PDU_zd">
+ <b style="font-size:2vh;">效果</b></br>
+ <img id="monkey"/>
+ </div>
+</div>
+<div class="xiang PDU_xiang"></div>
+<div class="xiang PDU_xiang"></div>
+ </div>
+</aside>
+
+<!--搜索栏侧边栏-->
+<aside id="SearchBar" class="RightSidebar" style="z-index:8;">
+<div class="Ptop search-container">
+<div class="Ptop_lk">
+<!--返回-->
+<div class="Return" id="SearchBar_Return"></div>
+<!--搜索栏-->
+<div class="search">
+ <form action="javascript:SearchSong();">
+ <input type="search" id="Inmiss"/>
+ <div id="SearchRecord_button"></div>
+ <button>搜索</button>
+ </form>
+</div>
+</div>
+<div id="appNamelist"></div>
+</div>
+<div id="container"></div>
+</aside>
+
+<!--搜索记录-->
+<div id="SearchRecord_mcm"></div>
+<div id="SearchRecord_page">
+<div class="PDU_ztsL" style="justify-content:center;background-color:Transparent;"><b>搜索记录</b><div id="Deleterecord"></div></div>
+<div id="SearchRecord_kuang"></div>
+</div>
+<!--音乐更多-->
+<div id="MusicMore_mcm"></div>
+<div id="MusicMore_page">
+<div class="PDU_ztsL" style="justify-content:center;background-color:Transparent;"><b>音乐更多</b></div>
+<div id="MusicMore_kuang">
+<div class="MusicMore_kuang_nss"><small id="MusicMore_nss_name">歌名</small> - <small id="MusicMore_nss_singer">歌手</small> <button id="MusicMore_nss_copy">复制</button></div>
+<div class="MusicMore_kuang_box" style="display:flex;">
+ <div class="MusicMore_kuang_button" id="MusicMore_kuang_NextSong"><div class="MusicMore_kuang_icon NextSong"></div><span>下一首</span></div>
+ <div class="MusicMore_kuang_button" id="MusicMore_kuang_CopyLink"><div class="MusicMore_kuang_icon CopyLink"></div><span>复制链接</span></div>
+</div>
+<div class="MusicMore_kuang_box" style="margin:2% 0;">
+ <div class="MusicMore_volume_box" style="display:flex;"><button class="MusicMore_kuang_icon" id="MusicMore_volume_button"></button><input type="range" id="MusicMore_volume" max="100" value="100" step="0.01" style="background-color:#aaa;background-size:100% 100%;"/></div>
+ <div class="MusicMore_volume_box"><input type="range" id="MusicMore_DoubleSpeed" min="50" max="150" value="100" step="0.01" style="background-color:#aaa;background-size:100% 100%;"/>
+ <div id="MusicMore_DoubleSpeed_text">1倍速</div>
+ </div>
+</div>
+</div>
+</div>
+<!--播放页-->
+<aside id="PlayPage" class="RightSidebar">
+<div style="width:100%;background-color:rgba(0,0,0,0.3);height:100%;backdrop-filter:blur(10px);">
+<div class="Ptop PDU-container" style="background-color:Transparent;">
+<!--返回-->
+<div class="Ptop_lk" style="align-items:center;justify-content: center;">
+<div class="Return" id="PlayPage_Return"></div>
+</div>
+</div>
+<div id="PlayPage_kuang" class="kuang">
+<div class="xiang PDU_xiang" style="overflow: hidden">
+<div class="PlayPage_Cover_box"><div class="PlayPage_Cover_mo"><div id="PlayPage_Cover"></div></div><div id="PlayPage_Record"><div id="PlayPage_Record_Cover"><div id="PlayPage_Cover_kong"></div></div></div></div>
+<div class="PlayPage_Lyric_box"><div id="lyric"><div id="PlayPage_Lyric"></div></div></div>
+<div class="PlayPage_Songmessage_box"><b id="PlayPage_Songmessage_name">歌名</b><small id="PlayPage_Songmessage_singer">歌手</small>
+<div id="PlayPage_more"></div>
+</div>
+<div class="PlayPage_Ctk_box"><div class="PlayPage_Times"><time id="PlayPage_Times_pss">00:00</time><input type="range" id="PlayPagePss" max="100" value="0" step="0.01"/><time id="PlayPage_Times_don">00:00</time></div><div class="PlayPage_Controls"><button id="PlayPage_Controls_Pattern"></button><button id="PlayPage_Controls_Previous"></button><div id="PlayPage_Controls_PPDX"><button id="PlayPage_Controls_ppd"></button></div><button id="PlayPage_Controls_NextSong"></button><button id="PlayPage_MCollection"></button></div></div>
+</div>
+</div>
+</div>
+</aside>
+<audio id="Music"></audio>
+<div id="index">
+<!--头部-->
+<header id="TopBar">
+<div class="Eject" onclick="Lif()"></div>
+<div id="Topsou"><span id="souTi">关键词</span></div>
+<div id="Topmenu"  class="PersonalizedDressUp_rebd" style="background-color:#000;top:14%;"></div>
+<nav class="daohanglan">
+<button>首页</button><button>音乐</button><button>ASMR</button><button>视频</button>
+</nav>
+<div id="daohanglan_tiao"></div>
+</header>
+<div id="Hkuang" class="kuang" style="height:71%;">
+<div class="xiang Hxiang"></div>
+<div class="xiang Hxiang"></div>
+<div class="xiang Hxiang"></div>
+<div class="xiang Hxiang" style="overflow-y:hidden;">
+<div id="video_loading"><div class="video_loading_box"><address id="video_loading_name"></address><progress id="video_loading_progress" max="100" value="0" style="display:block;"></progress><div style="width:90%;margin:0% 5% 5% 5%; color:#aaa;"><small id="video_loading_pss" style="float:left;">0%</small><small id="video_loading_than" style="float:right;">1/1</small></div></div></div>
+</div>
+</div>
+<div id="Hbottom">
+<input type="range" id="HbmPss" max="100" value="0" step="0.01"/>
+ <div class="Hbmk">
+ <div class="Hbm_Coverk"><div id="Hbm_Cover"></div><div id="Hbm_Record"></div></div>
+ <div class="Hbm_Nsk"><b id="Hbm_Nsk_name">歌名</b><small id="Hbm_Nsk_singer">歌手</small></div>
+ <div class="Hbm_Ctk">
+ <div class="Hbm_Controls"><button id="Hbm_Controls_Previous"></button><button id="Hbm_Controls_ppd"></button><button id="Hbm_Controls_NextSong"></button><button id="MCollection"></button></div>
+ <div class="Hbm_Times"><time id="Hbm_Times_pss">00:00</time><time id="Hbm_Times_don">00:00</time></div>
+ </div>
+ </div>
+ </div>
+</div>
+<script>
+
+</script>
+</body>
+</html>

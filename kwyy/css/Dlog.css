@@ -1,0 +1,101 @@
+/*弹窗*/
+.DML{
+  position:fixed;
+  top:0;
+  z-index:999;
+  width:100vw;
+  height:100%;
+  display:none;
+  align-items: center;
+  justify-content: center;
+  transition:0.3s;
+  }
+
+.D-box{
+  top:var(--top);
+  right:2.5px;
+  z-index:2;
+  position:absolute;
+  max-width:180px;
+  width:50%;
+  max-height:200px;
+  overflow-y: auto;
+  border-radius:2px;
+  background-color:white;
+  transform-origin:top right;
+  transform:scale(0.9);
+  transition:0.3s;
+  }
+
+ /*提示*/
+ #tip{
+  padding:2vh;
+  max-width:80vw;
+  max-height:18vh;
+  position:fixed;
+  z-index:999;
+  bottom:11.5vh;
+  display:none;
+  opacity:0;
+  color:#007eff;
+  font-weight:400;
+  font-size:1.9vh;
+  transition:0.5s opacity ease-in-out;
+  border-radius:8px;
+  align-items: center;
+  justify-content: center;
+  background-color:white;
+  filter:drop-shadow(0 0 0.3px #aaa);
+  }
+ /*提示2*/
+ #PopTip{
+  z-index:999;
+  position:fixed;
+  color:white;
+  width:100%;
+  transition:0.5s;
+  transform:translateY(-100%);
+  background-color:var(--Tcolor);
+  }
+.PopTip_title_box{
+  width:100%;
+  height:80px;
+  position:relative;
+  }
+#PopTip_title{
+  position:absolute;
+  font-size:20px;
+  bottom:5%;
+  left:20%;
+  }
+#PopTip_content{
+  font-size:15px;
+  line-height:20px;
+  width:80%;
+  min-height:20px;
+  max-height:80px;
+  overflow:hidden;
+  }
+@keyframes Bounce{
+  from{
+  transform:scale(0.95);
+  }
+  to{
+  transform:scale(1.15);
+  }
+  }
+
+/*其他*/
+.Dink{
+  width:100%;
+  padding:0;
+  }
+.Dink input{
+  width:100%;
+  outline:none;
+  border:none;
+  border-bottom:1px solid black;
+  }
+#Dimg_presentation{
+  max-width:100%;
+  }

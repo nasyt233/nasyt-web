@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NAS油条导航</title>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="icon" type="appIcon.png" href="appIcon.png" />
+</head>
+
+<body>
+<!-- 遮罩层 -->
+  <div id="overlay" style="display: none;">
+
+        <div class="popup">
+            <h2>最新公告</h2>
+            <p>欢迎访问NAS油条主站</p>
+            <p>本站由NAS油条搭建</p>
+            <p>QQ群号:610699712</p>
+            <br>
+            <!--
+            <h2>云服务器推荐</h2>
+            <p>金牌cpu云服务器9.9元起</p>
+            <p>国内高配服务器99元</p>
+            <p>云电脑4元起</p>
+            <p>虚拟主机免费送</p>
+            <p>地址 - <a href="https://www.coyun.cc/" target="_blank">创欧云</a>   百度 - 创欧云 </p>
+            -->
+            <button class="button" onclick="closePopup()">确定</button>
+        </div>
+
+  </div>
+    <header>
+        <h1><em><u><strong>2026年5月22日更新</strong></u></em></h1>
+        <h1>网站目录</h1>
+        <nav>
+            <ul>
+                <li><a href="index1.html" class="btn">导航站</a></li>
+                <li><a href="GalGame/index.html" class="btn">GalGame体验</a></li>
+            </ul>
+        </nav>
+        <br>
+        <hr>
+        <h1>其它网站</h1>
+        <nav>
+            <ul>
+                <li><a href="nasyt.html" class="btn">NAS油条Linux工具箱</a></li>
+                <li><a href="http://220.205.16.24:5244" class="btn">NAS油条Alist下载站</a></li>
+                <li><a href="pic.html" class="btn">图片混淆</a></li>
+                <li><a href="dow.html" class="btn">下载站②</a></li>
+                <li><a href="DAT.html" class="btn">DAT官网</a></li>
+                <li><a href="sps.html" class="btn">SPS上飘航天</a></li>
+            </ul>
+        </nav>
+        <br>
+        <!--
+        <hr>
+        <h1>服务器</h1>
+        <nav>
+            <ul>
+                <li><a href="" class="btn">简欢云服务器</a></li>
+                <li><a href="" class="btn">染怡互联服务器</a></li>
+            </ul>
+        </nav>
+        -->
+    </header>
+    <footer>
+        &copy; 2025 NAS油条 版权所有
+        <a href="https://icp.gov.moe/?keyword=20250251" target="_blank">萌ICP备20250251号</a>
+        <img style="width:50%;" src="img/cloudflare.png"/>
+    </footer>
+
+    <!-- JavaScript 文件 -->
+    <script src="https://cdn.bootcss.com/sweetalert/2.1.0/sweetalert.min.js"></script>
+    <script src="js/gg.js" defer></script>
+    
+    <!-- JavaScript 内容 -->
+    <script>
+        // 显示弹窗函数
+        function showPopup() {
+            document.getElementById('overlay').style.display = 'flex';
+        }
+
+        // 关闭弹窗函数
+        function closePopup() {
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        // 页面加载完成后自动显示弹窗
+        window.onload = function() {
+            showPopup();
+        };
+    </script>
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+         hm.src = "https://hm.baidu.com/hm.js?9f8a8b8347c85e12432af8112d891095";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+        })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAT QQ机器人模拟器</title>
+    <style>
+        :root {
+            --primary-color: #1a1a1a;
+            --secondary-color: #2a2a2a;
+            --accent-color: #177ddc;
+            --highlight-color: #d32029;
+            --text-color: #e6e6e6;
+            --text-secondary: #8c8c8c;
+            --border-color: #434343;
+            --card-bg: #141414;
+            --chat-bg: #1f1f1f;
+            --my-msg-bg: #2a3a4a;
+            --bot-msg-bg: #2a2a2a;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        [data-theme="light"] {
+            --primary-color: #0080FF;
+            --secondary-color: #e6f2ff;
+            --accent-color: #0078d4;
+            --highlight-color: #d32029;
+            --text-color: #333333;
+            --text-secondary: #666666;
+            --border-color: rgba(0, 0, 0, 0.1);
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --chat-bg: #f5f5f5;
+            --my-msg-bg: #d0e6ff;
+            --bot-msg-bg: #fff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            transition: background-color 0.3s;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 15px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .logo h1 {
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .theme-switch {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+        }
+
+        .chat-container {
+            display: flex;
+            flex: 1;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            background-color: var(--card-bg);
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: var(--secondary-color);
+            border-right: 1px solid var(--border-color);
+            padding: 15px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-color) var(--secondary-color);
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .sidebar::-webkit-scrollbar-track {
+            background: var(--secondary-color);
+        }
+        .sidebar::-webkit-scrollbar-thumb {
+            background-color: var(--accent-color);
+            border-radius: 3px;
+        }
+
+        .group-info {
+            margin-bottom: 20px;
+        }
+
+        .group-name {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .group-id {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .command-list h3 {
+            font-size: 14px;
+            margin-bottom: 10px;
+            color: var(--text-secondary);
+            padding-bottom: 5px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .command-item {
+            padding: 8px 10px;
+            margin-bottom: 5px;
+            border-radius: 4px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .command-item:hover {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .chat-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            background-color: var(--chat-bg);
+            scroll-behavior: smooth;
+            overscroll-behavior: contain;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-color) var(--secondary-color);
+        }
+
+        .messages::-webkit-scrollbar {
+            width: 6px;
+        }
+        .messages::-webkit-scrollbar-track {
+            background: var(--secondary-color);
+        }
+        .messages::-webkit-scrollbar-thumb {
+            background-color: var(--accent-color);
+            border-radius: 3px;
+        }
+
+        .message {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.2s ease;
+        }
+
+        .message:hover {
+            transform: translateX(3px);
+        }
+
+        .message-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .sender-name {
+            font-weight: 500;
+            font-size: 13px;
+        }
+
+        .message-time {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-left: 10px;
+        }
+
+        .message-content {
+            padding: 10px 15px;
+            border-radius: 4px;
+            max-width: 70%;
+            font-size: 14px;
+            line-height: 1.5;
+            word-wrap: break-word;
+        }
+
+        .my-message {
+            align-items: flex-end;
+        }
+
+        .my-message .message-content {
+            background-color: var(--my-msg-bg);
+            border-top-right-radius: 0;
+        }
+
+        .bot-message {
+            align-items: flex-start;
+        }
+
+        .bot-message .message-content {
+            background-color: var(--bot-msg-bg);
+            border-top-left-radius: 0;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .message-img {
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 4px;
+            margin-top: 5px;
+        }
+
+        .input-area {
+            padding: 15px;
+            border-top: 1px solid var(--border-color);
+            background-color: var(--card-bg);
+        }
+
+        .input-box {
+            display: flex;
+        }
+
+        .input-box textarea {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            resize: none;
+            height: 60px;
+            font-family: inherit;
+            font-size: 14px;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+        }
+
+        .send-btn {
+            margin-left: 10px;
+            padding: 0 20px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.2s;
+        }
+
+        .send-btn:hover {
+            background-color: #40a9ff;
+        }
+
+        .menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .quick-menu {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 10px;
+            gap: 5px;
+        }
+
+        .quick-menu-item {
+            padding: 5px 10px;
+            background-color: var(--secondary-color);
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .quick-menu-item:hover {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-weight: 500;
+            margin-bottom: 10px;
+            color: var(--accent-color);
+        }
+
+        .card-content {
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .command-format {
+            font-family: monospace;
+            background-color: var(--secondary-color);
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-size: 12px;
+        }
+
+        .emoji {
+            font-size: 18px;
+            vertical-align: middle;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: -250px;
+                height: 100vh;
+                z-index: 100;
+                transition: left 0.3s;
+            }
+
+            .sidebar.active {
+                left: 0;
+            }
+
+            .menu-btn {
+                display: block;
+            }
+
+            .chat-container {
+                flex-direction: column;
+            }
+
+            .chat-area {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <img src="https://q2.qlogo.cn/headimg_dl?dst_uin=901978115&spec=100" alt="DAT Logo">
+                <h1>DAT QQ机器人</h1>
+            </div>
+            <button class="theme-switch" id="themeSwitch">🌙 夜间模式</button>
+            <button class="menu-btn" id="menuBtn">☰</button>
+        </div>
+
+        <div class="chat-container">
+            <div class="sidebar" id="sidebar">
+                <div class="group-info">
+                    <div class="group-name">DARK研究所</div>
+                    <div class="group-id">群号: 901978115</div>
+                </div>
+
+                <div class="command-list">
+                    <h3>常用功能</h3>
+                    <div class="command-item" data-command="菜单">菜单</div>
+                    <div class="command-item" data-command="签到">签到</div>
+                    <div class="command-item" data-command="验证码">验证码</div>
+                    <div class="command-item" data-command="抽卡">抽卡</div>
+                    <div class="command-item" data-command="炸弹系统">炸弹系统</div>
+                    <div class="command-item" data-command="AI绘画">AI绘画</div>
+                    <div class="command-item" data-command="点歌 海阔天空">点歌</div>
+                    <div class="command-item" data-command="随机表情">随机表情</div>
+                    <div class="command-item" data-command="此刻运势">此刻运势</div>
+                    <div class="command-item" data-command="银行">银行</div>
+                    <div class="command-item" data-command="我的背包">我的背包</div>
+                    <div class="command-item" data-command="转人工">转人工</div>
+                </div>
+
+                <div class="command-list">
+                    <h3>账号相关</h3>
+                    <div class="command-item" data-command="DAT账号注册">账号注册</div>
+                    <div class="command-item" data-command="DAT个人注册">个人注册</div>
+                    <div class="command-item" data-command="DAT群聊注册">群聊注册</div>
+                </div>
+
+                <div class="command-list">
+                    <h3>其他功能</h3>
+                    <div class="command-item" data-command="时间">时间</div>
+                    <div class="command-item" data-command="随机数字">随机数字</div>
+                    <div class="command-item" data-command="1-100">随机1-100</div>
+                    <div class="command-item" data-command="那年今日">那年今日</div>
+                    <div class="command-item" data-command="SFS教程">SFS教程</div>
+                    <div class="command-item" data-command="制作方|开发者">开发者</div>
+                </div>
+            </div>
+
+            <div class="chat-area">
+                <div class="messages" id="messages">
+                    <!-- 消息将在这里动态添加 -->
+                </div>
+
+                <div class="input-area">
+                    <div class="input-box">
+                        <textarea id="messageInput" placeholder="输入消息..." autofocus></textarea>
+                        <button class="send-btn" id="sendBtn">发送</button>
+                    </div>
+                    <div class="quick-menu">
+                        <div class="quick-menu-item" data-command="菜单">菜单</div>
+                        <div class="quick-menu-item" data-command="签到">签到</div>
+                        <div class="quick-menu-item" data-command="验证码">验证码</div>
+                        <div class="quick-menu-item" data-command="抽卡">抽卡</div>
+                        <div class="quick-menu-item" data-command="炸弹系统">炸弹系统</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 主题切换
+        const themeSwitch = document.getElementById('themeSwitch');
+        const body = document.body;
+        
+        if (localStorage.getItem('theme') === 'dark') {
+            body.setAttribute('data-theme', 'dark');
+            themeSwitch.textContent = '☀️ 日间模式';
+        }
+        
+        themeSwitch.addEventListener('click', () => {
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                themeSwitch.textContent = '🌙 夜间模式';
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                themeSwitch.textContent = '☀️ 日间模式';
+            }
+        });
+
+        // 移动端菜单切换
+        const menuBtn = document.getElementById('menuBtn');
+        const sidebar = document.getElementById('sidebar');
+        
+        menuBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+        });
+
+        // 聊天功能
+        const messageInput = document.getElementById('messageInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const messagesContainer = document.getElementById('messages');
+        const commandItems = document.querySelectorAll('.command-item, .quick-menu-item');
+        
+        // 用户信息
+        const userInfo = {
+            name: '用户',
+            avatar: 'https://q2.qlogo.cn/headimg_dl?dst_uin=123456789&spec=100',
+            qq: '123456789'
+        };
+        
+        // 机器人信息
+        const botInfo = {
+            name: 'DAT机器人',
+            avatar: 'https://q2.qlogo.cn/headimg_dl?dst_uin=901978115&spec=100',
+            qq: '901978115'
+        };
+        
+        // 添加消息到聊天窗口
+        function addMessage(sender, content, isImage = false) {
+            const messageDiv = document.createElement('div');
+            const isMe = sender.qq === userInfo.qq;
+            
+            messageDiv.className = `message ${isMe ? 'my-message' : 'bot-message'}`;
+            
+            const now = new Date();
+            const timeString = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+            
+            let contentHtml;
+            if (isImage) {
+                contentHtml = `<img src="${content}" class="message-img" alt="图片">`;
+            } else {
+                // 处理换行和特殊格式
+                contentHtml = content.replace(/\r\n/g, '<br>')
+                                    .replace(/\n/g, '<br>')
+                                    .replace(/±img=\$(.*?)\$±/g, '<img src="$1" class="message-img" alt="图片">');
+            }
+            
+            messageDiv.innerHTML = `
+                <div class="message-info">
+                    <img src="${sender.avatar}" class="avatar" alt="${sender.name}">
+                    <span class="sender-name">${sender.name}</span>
+                    <span class="message-time">${timeString}</span>
+                </div>
+                <div class="message-content">${contentHtml}</div>
+            `;
+            
+            messagesContainer.appendChild(messageDiv);
+            
+            // 平滑滚动到底部
+            messagesContainer.scrollTo({
+                top: messagesContainer.scrollHeight,
+                behavior: 'smooth'
+            });
+        }
+        
+        // 发送消息
+        function sendMessage() {
+            const content = messageInput.value.trim();
+            if (!content) return;
+            
+            addMessage(userInfo, content);
+            messageInput.value = '';
+            
+            // 模拟机器人回复
+            setTimeout(() => {
+                handleBotResponse(content);
+            }, 500);
+        }
+        
+        // 处理机器人回复
+        function handleBotResponse(userMessage) {
+            let response = '';
+            let isImage = false;
+            let imageUrl = '';
+            
+            // 转换为小写方便匹配
+            const lowerMessage = userMessage.toLowerCase();
+            
+            // 菜单命令
+            if (lowerMessage === '菜单' || lowerMessage === 'dark' || lowerMessage === 'dat') {
+                response = `你好！您可以尝试向我发送：\r
+————菜单————\r
+[签到][炸弹系统][艾特作图]\r
+[点赞][我的背包][点歌][转人工]\r
+[银行][加入总群][制作方|开发者]\r
+[SFS教程][AI绘画][随机表情]\r
+[提供意见][图生图][此刻运势]\r
+[抽卡][时间][随机数字][验证码]\r
+———————————\r
+±img=$https://api.lolimi.cn/API/preview/api.php?qq=901978115&type=6$±`;
+            } 
+            // 签到
+            else if (lowerMessage === '签到') {
+                const now = new Date();
+                response = `签到成功\r
+╭───────────╮\r
+  ╭─╮╭─╮╭─╮╭─╮\r
+  │成││功││签││到│\r
+  ╰─╯╰─╯╰─╯╰─╯\r
+◎Sign-in success\r
+☆DAT\r
+${userInfo.name}今日已签到\r
+注：仅每天第1次签到会增加1000金币！\r
+□签到时间${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}\r
+╰───────────╯`;
+            }
+            // 验证码
+            else if (lowerMessage === '验证码') {
+                const code = Math.floor(1000 + Math.random() * 9000);
+                response = `验证码已私发给您，请注意查收！\r
+您的验证码是：${code}，请勿泄露给他人，防止个人隐私泄露！收到后请在刚才的群聊内按照格式（验证码：数字）发送验证码。`;
+            }
+            // 抽卡
+            else if (lowerMessage === '抽卡') {
+                response = `☆单抽☆\r
+○五连抽○\r
+□十连抽□\r
+注：只用于娱乐！请勿做出其他过激行为。\r
+±img=$https://api.lolimi.cn/API/preview/api.php?qq=901978115&type=6$±`;
+            }
+            // 单抽
+            else if (lowerMessage === '单抽') {
+                const cards = ['☆DAT纪念卡☆', '☆DAT头衔卡（私信群主获得）☆', '☆DAT普通卡☆', '☆JONGN纪念卡☆', '☆npp纪念卡☆', '☆DARK普通卡☆', '☆DAT隐藏卡☆', '☆npp隐藏卡☆'];
+                const randomCard = cards[Math.floor(Math.random() * cards.length)];
+                response = `恭喜你抽到了：\r
+${randomCard}`;
+            }
+            // 五连抽
+            else if (lowerMessage === '五连抽') {
+                const cards = ['☆DAT纪念卡☆', '☆DAT头衔卡（私信群主获得）☆', '☆DAT普通卡☆', '☆JONGN纪念卡☆', '☆npp纪念卡☆', '☆DARK普通卡☆', '☆DAT隐藏卡☆', '☆npp隐藏卡☆'];
+                let result = '恭喜你抽到了：\r';
+                for (let i = 0; i < 5; i++) {
+                    result += cards[Math.floor(Math.random() * cards.length)] + '\r';
+                }
+                response = result;
+            }
+            // 十连抽
+            else if (lowerMessage === '十连抽') {
+                const cards = ['☆DAT纪念卡☆', '☆DAT头衔卡（私信群主获得）☆', '☆DAT普通卡☆', '☆JONGN纪念卡☆', '☆npp纪念卡☆', '☆DARK普通卡☆', '☆DAT隐藏卡☆', '☆npp隐藏卡☆'];
+                let result = '恭喜你抽到了：\r';
+                for (let i = 0; i < 10; i++) {
+                    result += cards[Math.floor(Math.random() * cards.length)] + '\r';
+                }
+                response = result;
+            }
+            // 炸弹系统
+            else if (lowerMessage === '炸弹系统') {
+                response = `⭐️领取炸弹⭐️\r
+⭐️查看炸弹@⭐️\r
+⭐️炸@⭐️`;
+            }
+            // 领取炸弹
+            else if (lowerMessage === '领取炸弹') {
+                const bombCount = Math.floor(1 + Math.random() * 2);
+                response = `你领取了${bombCount}个炸弹`;
+            }
+            // 查看炸弹
+            else if (lowerMessage === '查看炸弹') {
+                const bombCount = Math.floor(3 + Math.random() * 5);
+                response = `你现在拥有${bombCount}个炸弹`;
+            }
+            // 炸@
+            else if (lowerMessage.startsWith('炸@')) {
+                const randomResult = Math.floor(1 + Math.random() * 3);
+                if (randomResult === 1) {
+                    response = `你炸中了，TA被炸晕了`;
+                } else {
+                    response = `你炸偏了，把自己炸晕了`;
+                }
+            }
+            // AI绘画
+            else if (lowerMessage === 'ai绘画' || lowerMessage === '绘画') {
+                response = `请发送：\r
+绘+描述词+空格+风格+风格名称\r
+风格名称发送[风格]`;
+            }
+            // 风格
+            else if (lowerMessage === '风格') {
+                response = `人物摄影 电影写真 中国风 3D渲染 水墨画\r
+油画 动漫 CG动画 赛博朋克 水彩画\r
+卡通 平面插图 风景 港风动漫 像素风格\r
+荧光绘画 彩铅画 手办 儿童绘画 抽象\r
+瑞笔插画 二次元 油墨印刷 版画 莫奈\r
+毕加索 复古动漫 绘本 古典`;
+            }
+            // 点歌
+            else if (lowerMessage.startsWith('点歌')) {
+                const songName = userMessage.substring(3).trim();
+                if (songName) {
+                    response = `1 海阔天空-Beyond\r
+2 ${songName}-未知歌手\r
+3 夜曲-周杰伦\r
+4 晴天-周杰伦\r
+5 稻香-周杰伦\r
+请发送 选歌+序号 来听歌吧。`;
+                } else {
+                    response = `点歌格式：\r
+[点歌 （空格） （歌名）]`;
+                }
+            }
+            // 选歌
+            else if (lowerMessage.startsWith('选歌')) {
+                const songNum = userMessage.substring(3).trim();
+                if (songNum === '1') {
+                    response = `正在播放: 海阔天空 - Beyond\r
+±img=$https://p2.music.126.net/9idkdzbel_-lYBP7Dv_dVQ==/109951163613837525.jpg$±`;
+                } else {
+                    response = `正在播放: 您选择的歌曲\r
+±img=$https://p2.music.126.net/9idkdzbel_-lYBP7Dv_dVQ==/109951163613837525.jpg$±`;
+                }
+            }
+            // 随机表情
+            else if (lowerMessage === '随机表情') {
+                const randomEmoji = Math.floor(1 + Math.random() * 10);
+                isImage = true;
+                imageUrl = `https://api.lolimi.cn/API/preview/api.php?qq=${userInfo.qq}&type=${randomEmoji}`;
+            }
+            // 此刻运势
+            else if (lowerMessage === '此刻运势') {
+                const fortunes = ['大吉', '大凶', '凶', '凶带吉', '吉'];
+                const randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
+                response = `你此刻的运势是：${randomFortune}\r
+（仅娱乐，请相信科学，请勿做出任何过激行为！）\r
+±img=$https://api.lolimi.cn/API/preview/api.php?qq=${userInfo.qq}&type=6$±`;
+            }
+            // 银行
+            else if (lowerMessage === '银行') {
+                response = `❁抢劫@❁\r
+❁查看金币@❁\r
+[贷款金币]\r
+贷款金币每次增加1000个，每天仅限一次`;
+            }
+            // 我的背包
+            else if (lowerMessage === '我的背包') {
+                response = `[放入+文字]\r
+[扔掉+文字]\r
+本功能请勿频繁使用！\r
+❁———背包———❁\r
+\r
+你的背包空空如也哦\r
+±img=$https://api.lolimi.cn/API/preview/api.php?qq=${userInfo.qq}&type=6$±`;
+            }
+            // 转人工
+            else if (lowerMessage === '转人工') {
+                response = `DAT开发者正在呼叫人工，请稍等！如有需要，请使用功能[提供意见]直接向开发者申请！`;
+            }
+            // 账号注册
+            else if (lowerMessage === 'dat账号注册' || lowerMessage === '账号注册') {
+                response = `欢迎使用DAT robot，现在您操作的是：账号注册\r
+1.DAT个人注册\r
+2.DAT群聊注册\r
+3.DAT频道注册\r
+4.DAT团体注册\r
+5.DAT该群账号查询（开发者功能）\r
+±img=$https://api.lolimi.cn/API/preview/api.php?qq=${userInfo.qq}&type=6$±`;
+            }
+            // 个人注册
+            else if (lowerMessage === 'dat个人注册' || lowerMessage === '个人注册') {
+                const code = Math.floor(1000 + Math.random() * 9000);
+                response = `验证码已私发给您，请注意查收！\r
+您的验证码是：${code}，请勿泄露给他人，防止个人隐私泄露！收到后请在刚才的群聊内按照格式（个人账号注册验证码：数字）发送验证码。`;
+            }
+            // 时间
+            else if (lowerMessage === '时间') {
+                const now = new Date();
+                response = `现在时间：${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
+            }
+            // 随机数字
+            else if (lowerMessage === '随机数字') {
+                response = `数字：\r
+1-100\r
+1-10\r
+1-1000\r
+1-10000\r
+1-100000`;
+            }
+            // 1-100
+            else if (lowerMessage === '1-100') {
+                response = Math.floor(1 + Math.random() * 100).toString();
+            }
+            // 那年今日
+            else if (lowerMessage === '那年今日') {
+                response = `1、年份:2008\n北京奥运会开幕\n
+2、年份:1969\n人类首次登月\n
+3、年份:1945\n美国在日本广岛投下原子弹\n
+4、年份:1926\n电视首次公开展示\n
+5、年份:1819\n新加坡成为英国殖民地`;
+            }
+            // SFS教程
+            else if (lowerMessage === 'sfs教程') {
+                response = `导入蓝图\r1.导入文件【汉化/星球扩展/蓝图/存档】\r
+下载/解压/移动/安装【顺序颠倒可能出现错误】\r
+第一步先下载文件,打开Es/MT文件管理器，找到下载后的文件并【复制】下方有查找路径，找不到文件可以尝试\r
+【如果是压缩包先解压:压缩包后缀为zip】\r
+第二步由上总路径所示找到汉化文件包/蓝图文件包/存档文件包/星球文件包粘贴即可【有些因为版本问题可能没有文件包】【如若出现特殊情况 粘贴不上去 可以删除源文件，重新下载安装/换一个安装包（有些人可能不会发蓝图 只发了一个空包/因时间过长安装包损坏 安装之后不会出现任何文件 正常情况下只能放弃）】【如果载入后打开游戏没有更新，删除后台 重启即可！蓝图可能因为版本问题打不开，如果可以的话试图修改标识版本文件改到对应版本即可！汉化包需要在游戏内设置底部调整！星球文件包需要重新创建新的世界！】`;
+            }
+            // 开发者
+            else if (lowerMessage === '制作方|开发者' || lowerMessage === '开发者') {
+                response = `在此，特别鸣谢以下人员对我们做出了贡献：\r
+1.JONGN\r
+2.npp(Zephyrine)(开学力)(joker)\r
+3.DAT\r
+4.屑南栀？屑男娘！\r
+±img=$https://api.lolimi.cn/API/preview/api.php?qq=${userInfo.qq}&type=6$±`;
+            }
+            // 默认回复
+            else {
+                const randomResponses = [
+                    '你好！发送"菜单"查看功能列表',
+                    '我不太明白您的意思，试试发送"菜单"查看功能列表',
+                    '您可以发送"菜单"查看我能做什么',
+                    '需要帮助吗？发送"菜单"查看功能列表'
+                ];
+                response = randomResponses[Math.floor(Math.random() * randomResponses.length)];
+            }
+            
+            if (isImage) {
+                addMessage(botInfo, imageUrl, true);
+            } else {
+                addMessage(botInfo, response);
+            }
+        }
+        
+        // 发送按钮点击事件
+        sendBtn.addEventListener('click', sendMessage);
+        
+        // 回车键发送消息
+        messageInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+        
+        // 命令项点击事件
+        commandItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const command = item.getAttribute('data-command');
+                messageInput.value = command;
+                sendMessage();
+            });
+        });
+        
+        // 初始欢迎消息
+        setTimeout(() => {
+            addMessage(botInfo, `欢迎${userInfo.name}加入DARK研究所，您可以向我发送：DARK或DAT来获取菜单`);
+        }, 500);
+
+        // 自动聚焦输入框
+        messageInput.focus();
+    </script>
+</body>
+</html>
